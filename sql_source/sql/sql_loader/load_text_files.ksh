@@ -1,0 +1,11 @@
+$ORACLE_HOME/bin/sqlldr parfile=parfile_all_text_all_tables
+#$ORACLE_HOME/bin/sqlldr parfile=parfile_gospel_of_john
+#$ORACLE_HOME/bin/sqlldr parfile=parfile_gospel_of_matthew
+#$ORACLE_HOME/bin/sqlldr parfile=parfile_great_expectations
+#$ORACLE_HOME/bin/sqlldr parfile=parfile_hamlet
+#$ORACLE_HOME/bin/sqlldr parfile=parfile_julius_caesar
+#$ORACLE_HOME/bin/sqlldr parfile=parfile_king_lear
+#$ORACLE_HOME/bin/sqlldr parfile=parfile_macbeth
+#$ORACLE_HOME/bin/sqlldr parfile=parfile_pickwick_papers
+#$ORACLE_HOME/bin/sqlldr parfile=parfile_romeo_and_juliet
+#$ORACLE_HOME/bin/sqlldr parfile=parfile_war_and_peace

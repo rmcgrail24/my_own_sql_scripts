@@ -1,0 +1,119 @@
+/* Formatted by PL/Formatter v3.1.2.1 on 2001/01/27 16:52 */
+
+CREATE OR REPLACE PACKAGE genmods
+IS
+   PROCEDURE func (
+      progname_in   IN   VARCHAR2,
+      return_in     IN   VARCHAR2
+   );
+
+   PROCEDURE use_new (
+      tab_in        IN   VARCHAR2,
+      progname_in   IN   VARCHAR2,
+      sch_in        IN   VARCHAR2 := NULL
+   );
+
+   PROCEDURE use_old (
+      tab_in        IN   VARCHAR2,
+      progname_in   IN   VARCHAR2,
+      sch_in        IN   VARCHAR2 := NULL
+   );
+END genmods;
+/
+CREATE OR REPLACE PACKAGE BODY genmods
+IS
+   PROCEDURE func (
+      progname_in   IN   VARCHAR2,
+      return_in     IN   VARCHAR2
+   )
+   IS
+      v_name VARCHAR2 (30) := LOWER (progname_in);
+   BEGIN
+      pl ('CREATE OR REPLACE FUNCTION ' || progname_in || '(');
+      pl ('   ) RETURN ' || return_in);
+      pl ('IS');
+      pl ('   retval ' || return_in || ';');
+      pl ('BEGIN');
+      pl ('   -- Your code here!');
+      pl (' ');
+      pl ('   RETURN retval;');
+      pl ('EXCEPTION');
+      pl ('   WHEN OTHERS');
+      pl ('   THEN');
+      pl ('      RETURN ');
+      pl ('END ' || progname_in);
+      pl ('/');
+   END;
+
+   PROCEDURE pseudorec (
+      tab_in        IN   VARCHAR2,
+      sch_in        IN   VARCHAR2 := NULL,
+      progname_in   IN   VARCHAR2,
+      type_in       IN   VARCHAR2
+   )
+   IS
+      CURSOR cur_cols (
+         l_owner   VARCHAR2,
+         l_table   VARCHAR2
+      )
+      IS
+         SELECT column_name
+           FROM all_tab_columns
+          WHERE owner = l_owner
+            AND table_name = UPPER (l_table)
+          ORDER BY column_id;
+
+      l_schema VARCHAR2 (30) := UPPER (NVL (sch_in, USER));
+      l_count PLS_INTEGER;
+      l_list VARCHAR2 (2000);
+   BEGIN
+      SELECT COUNT (*)
+        INTO l_count
+        FROM all_tab_columns
+       WHERE owner = l_schema
+         AND table_name = UPPER (tab_in);
+      pl (LOWER (progname_in) || ' (');
+
+      FOR rec IN cur_cols (l_schema, tab_in)
+      LOOP
+         IF cur_cols%ROWCOUNT = l_count
+         THEN
+            pl (l_list || '   :' || UPPER (type_in) || '.' || rec.column_name);
+         ELSE
+            pl (l_list || '   :' || UPPER (type_in) || '.' || rec.column_name ||
+                   ','
+            );
+         END IF;
+      END LOOP;
+
+      pl (');');
+   END pseudorec;
+
+   PROCEDURE use_new (
+      tab_in        IN   VARCHAR2,
+      progname_in   IN   VARCHAR2,
+      sch_in        IN   VARCHAR2 := NULL
+   )
+   IS
+   BEGIN
+      pseudorec (tab_in, sch_in, progname_in, 'NEW');
+   END;
+
+   PROCEDURE use_old (
+      tab_in        IN   VARCHAR2,
+      progname_in   IN   VARCHAR2,
+      sch_in        IN   VARCHAR2 := NULL
+   )
+   IS
+   BEGIN
+      pseudorec (tab_in, sch_in, progname_in, 'OLD');
+   END;
+END genmods;
+/
+
+
+
+
+
+
+

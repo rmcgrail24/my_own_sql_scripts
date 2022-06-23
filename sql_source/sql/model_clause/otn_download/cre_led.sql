@@ -1,0 +1,1 @@
+CREATE TABLE  ledger  (account  VARCHAR2(20), balance  NUMBER(10,2) );

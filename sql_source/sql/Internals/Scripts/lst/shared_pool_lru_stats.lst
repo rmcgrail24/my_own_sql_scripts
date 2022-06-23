@@ -1,0 +1,7 @@
+SQL> @shared_pool_lru_stats
+
+ RECURRENT  TRANSIENT    FLUSHED   PINS AND   ORA-4031  LAST ERROR
+    CHUNKS     CHUNKS     CHUNKS   RELEASES     ERRORS        SIZE
+---------- ---------- ---------- ---------- ---------- -----------
+       121        164     148447    4126701          0           0
+

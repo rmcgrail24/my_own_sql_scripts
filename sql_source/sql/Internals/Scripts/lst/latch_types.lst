@@ -1,0 +1,79 @@
+SQL> @latch_types
+
+  TYPE TYPE                           PARENT   CHILD                            
+NUMBER NAME                            LATCH LATCHES                            
+------ ------------------------------ ------ -------                            
+     0 latch wait list                     1       1                            
+     1 process allocation                  1                                    
+     2 session allocation                  1                                    
+     3 session switching                   1                                    
+     4 session idle bit                    1       1                            
+     5 cached attr list                    1                                    
+     6 GDS latch                           1                                    
+     7 modify parameter values             1                                    
+     8 messages                            1                                    
+     9 enqueues                            1                                    
+    10 enqueue hash chains                 1       1                            
+    11 trace latch                         1                                    
+    12 KSFQ                                1                                    
+    13 i/o slave adaptor                   1                                    
+    14 ksfv messages                       1       2                            
+    15 msg queue latch                     1       1                            
+    16 session queue latch                 1       1                            
+    17 direct msg latch                    1                                    
+    18 vecio buf des                       1                                    
+    19 ksfv subheap                        1                                    
+    20 file number translation table       1                                    
+    21 mostly latch-free SCN               1                                    
+    22 cache buffers chains                1     389                            
+    23 cache buffer handles                1                                    
+    24 multiblock read objects             1                                    
+    25 cache protection latch              1                                    
+    26 large memory latch                  1                                    
+    27 cache buffers lru chain             1       1                            
+    28 Active checkpoint queue latch       1                                    
+    29 Checkpoint queue latch              1       1                            
+    30 system commit number                1                                    
+    31 archive control                     1                                    
+    32 redo allocation                     1                                    
+    33 redo copy                           1                                    
+    34 instance latch                      1                                    
+    35 lock element parent latch           1                                    
+    36 KCL name table latch                1                                    
+    37 KCL freelist latch                  1                                    
+    38 loader state object freelist        1                                    
+    39 begin backup scn array              1                                    
+    40 dml lock allocation                 1                                    
+    41 list of block allocation            1                                    
+    42 transaction allocation              1                                    
+    43 transaction branch allocation       1                                    
+    44 sort extent pool                    1                                    
+    45 undo global data                    1                                    
+    46 ktm global data                     1                                    
+    47 sequence cache                      1                                    
+    48 row cache objects                   1                                    
+    49 cost function                       1                                    
+    50 user lock                           1                                    
+    51 global tx free list                 1                                    
+    52 global transaction                  1       8                            
+    53 global tx hash mapping              1       9                            
+    54 shared pool                         1                                    
+    55 library cache                       1       1                            
+    56 library cache load lock             1                                    
+    57 Token Manager                       1       2                            
+    58 Direct I/O Adaptor                  1                                    
+    59 virtual circuit buffers             1                                    
+    60 virtual circuit queues              1                                    
+    61 virtual circuits                    1                                    
+    62 ncodef allocation latch             1                                    
+    63 NLS data objects                    1                                    
+    64 query server process                1                                    
+    65 query server freelists              1                                    
+    66 error message lists                 1                                    
+    67 process queue                       1                                    
+    68 process queue reference             1                                    
+    69 parallel query stats                1       2                            
+    70 parallel query alloc buffer         1                                    
+    71 constraint object allocation        1                                    
+    72 device information                  1                                    
+    73 SGA variable                        1                                    

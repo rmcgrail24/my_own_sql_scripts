@@ -1,0 +1,123 @@
+CREATE OR REPLACE PACKAGE assert
+IS
+   PROCEDURE istrue (
+      condition_in IN BOOLEAN,
+      message_in IN VARCHAR2,
+      raise_exception_in IN BOOLEAN := TRUE,
+      exception_in IN VARCHAR2 := 'VALUE_ERROR'
+   );
+
+   PROCEDURE isnotnull (
+      value_in IN VARCHAR2,
+      message_in IN VARCHAR2,
+      raise_exception_in IN BOOLEAN := TRUE,
+      exception_in IN VARCHAR2 := 'VALUE_ERROR'
+   );
+
+   PROCEDURE isnotnull (
+      value_in IN DATE,
+      message_in IN VARCHAR2,
+      raise_exception_in IN BOOLEAN := TRUE,
+      exception_in IN VARCHAR2 := 'VALUE_ERROR'
+   );
+
+   PROCEDURE isnotnull (
+      value_in IN NUMBER,
+      message_in IN VARCHAR2,
+      raise_exception_in IN BOOLEAN := TRUE,
+      exception_in IN VARCHAR2 := 'VALUE_ERROR'
+   );
+
+   PROCEDURE isnotnull (
+      value_in IN BOOLEAN,
+      message_in IN VARCHAR2,
+      raise_exception_in IN BOOLEAN := TRUE,
+      exception_in IN VARCHAR2 := 'VALUE_ERROR'
+   );
+END assert;
+/
+CREATE OR REPLACE PACKAGE BODY assert
+IS
+   PROCEDURE istrue (
+      condition_in IN BOOLEAN,
+      message_in IN VARCHAR2,
+      raise_exception_in IN BOOLEAN := TRUE,
+      exception_in IN VARCHAR2 := 'VALUE_ERROR'
+   )
+   IS
+   BEGIN
+      IF    NOT condition_in
+         OR condition_in IS NULL
+      THEN
+         pl ('Assertion Failure!');
+         pl (message_in);
+
+         IF raise_exception_in
+         THEN
+            EXECUTE IMMEDIATE 'BEGIN RAISE ' || exception_in ||
+                                 '; END;';
+         END IF;
+      END IF;
+   END istrue;
+
+   PROCEDURE isnotnull (
+      value_in IN VARCHAR2,
+      message_in IN VARCHAR2,
+      raise_exception_in IN BOOLEAN := TRUE,
+      exception_in IN VARCHAR2 := 'VALUE_ERROR'
+   )
+   IS
+   BEGIN
+      istrue (value_in IS NOT NULL,
+         message_in,
+         raise_exception_in,
+         exception_in
+      );
+   END;
+
+   PROCEDURE isnotnull (
+      value_in IN DATE,
+      message_in IN VARCHAR2,
+      raise_exception_in IN BOOLEAN := TRUE,
+      exception_in IN VARCHAR2 := 'VALUE_ERROR'
+   )
+   IS
+   BEGIN
+      istrue (value_in IS NOT NULL,
+         message_in,
+         raise_exception_in,
+         exception_in
+      );
+   END;
+
+   PROCEDURE isnotnull (
+      value_in IN NUMBER,
+      message_in IN VARCHAR2,
+      raise_exception_in IN BOOLEAN := TRUE,
+      exception_in IN VARCHAR2 := 'VALUE_ERROR'
+   )
+   IS
+   BEGIN
+      istrue (value_in IS NOT NULL,
+         message_in,
+         raise_exception_in,
+         exception_in
+      );
+   END;
+
+   PROCEDURE isnotnull (
+      value_in IN BOOLEAN,
+      message_in IN VARCHAR2,
+      raise_exception_in IN BOOLEAN := TRUE,
+      exception_in IN VARCHAR2 := 'VALUE_ERROR'
+   )
+   IS
+   BEGIN
+      istrue (value_in IS NOT NULL,
+         message_in,
+         raise_exception_in,
+         exception_in
+      );
+   END;
+END assert;
+/   

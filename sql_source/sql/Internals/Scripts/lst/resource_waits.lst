@@ -1,0 +1,15 @@
+SQL> @resource_waits
+
+EVENT                                    TIME_WAITED AVERAGE_WAIT
+---------------------------------------- ----------- ------------
+write complete waits                         3816218       212.02
+buffer busy waits                            1395921        21.79
+enqueue                                       503217       529.15
+log file switch completion                    144263        90.11
+latch free                                     31173         0.61
+free buffer waits                              19352       302.38
+row cache lock                                   876        73.00
+library cache pin                                131        18.71
+library cache load lock                           29         2.64
+non-routine log file syncs                         0         2.32 
+

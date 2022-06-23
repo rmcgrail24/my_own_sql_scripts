@@ -1,0 +1,5 @@
+userid=system/oracle
+control='/home/russ/sql/sql_loader/ctl/names'
+external_table=generate_only
+log='/home/russ/sql/sql_loader/log/names'
+errors=2000

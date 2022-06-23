@@ -1,0 +1,21 @@
+SQL> @latch_where
+
+LATCH TYPE                     CODE LOCATION and [LABEL]                 SLEEPS 
+------------------------------ ---------------------------------------- ------- 
+redo allocation                kcrfwr: no commit                              9 
+messages                       ksarcv: after wait                             5 
+                               ksarcv                                         1 
+                               [msg state addr]                                 
+cache buffers chains           kcbgcur: kslbegin                              2 
+                               [buffer DBA]                                     
+                               kcbchg: kslbegin: call CR func                 1 
+                               [buffer DBA]                                     
+                               kcbbxsv: get DBA                               1 
+                               [DBA]                                            
+                               kcbzib: multi-block read: nowait               1 
+                               [block ptr]                                      
+cache buffers lru chain        kcbbzf                                         2 
+                               kcbzgb: single set                             1 
+Checkpoint queue latch         kcbbwcb: thread queue buffers                  1 
+                               kcbbmcql: Unlink from ckpt. queues             1 
+

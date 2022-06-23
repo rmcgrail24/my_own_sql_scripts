@@ -1,0 +1,28 @@
+SQL> @trace_waits
+
+This script uses event 10046, level 8 to trace the event waits in
+the top N sessions affected by waits for a particular resource.
+
+Select sessions waiting for: buffer busy waits
+Number of sessions to trace: 5
+Seconds to leave tracing on: 900
+
+Tracing ... Please wait ...
+
+PL/SQL procedure successfully completed.
+ 
+SQL> exit
+$ cd udump
+$ grep 'buffer busy waits' ora_*.trc |
+> sed -e 's/.*p1=/  file /' -e 's/ p2=/  block /' -e 's/ p3.*//' |
+> sort |
+> uniq -c |
+> sort -nr |
+> head -5
+  42    file 2    block 1036
+  12    file 24   block 3
+  10    file 2    block 1252
+   7    file 2    block 112
+   6    file 7    block 5122
+$
+

@@ -1,0 +1,66 @@
+CREATE OR REPLACE PACKAGE overdue_pkg
+IS
+   PROCEDURE set_daily_fine (fine_in IN NUMBER);
+
+   FUNCTION daily_fine
+      RETURN NUMBER;
+
+   FUNCTION days_overdue (isbn_in IN book.isbn%TYPE)
+      RETURN INTEGER;
+
+   -- Relies on g_daily_fine for calculation
+   FUNCTION fine (isbn_in IN book.isbn%TYPE)
+      RETURN INTEGER;
+      
+   PROCEDURE trc;
+   PROCEDURE notrc;
+   FUNCTION tracing RETURN BOOLEAN;
+   
+END overdue_pkg;
+/
+CREATE OR REPLACE PACKAGE BODY overdue_pkg
+IS
+   g_daily_fine NUMBER := .10;
+   g_trace BOOLEAN := FALSE;
+
+   PROCEDURE set_daily_fine (fine_in IN NUMBER)
+   IS
+   BEGIN
+      IF tracing
+      THEN
+         watch.action ('set_daily_fine', fine_in);
+      END IF;
+      
+      g_daily_fine := GREATEST (LEAST (fine_in, .25), .05);
+   END set_daily_fine;
+
+   FUNCTION daily_fine
+      RETURN NUMBER
+   IS
+   BEGIN
+      RETURN g_daily_fine;
+   END daily_fine;
+
+   FUNCTION days_overdue (isbn_in IN book.isbn%TYPE)
+      RETURN INTEGER
+   IS
+   BEGIN
+      --dummy
+      RETURN NULL;
+   END;
+
+   -- Relies on g_daily_fine for calculation
+   FUNCTION fine (isbn_in IN book.isbn%TYPE)
+      RETURN INTEGER
+   IS
+   BEGIN
+      --dummy
+      RETURN NULL;
+   END;
+   
+   PROCEDURE trc IS BEGIN g_trace := TRUE; END;
+   PROCEDURE notrc IS BEGIN g_trace := FALSE; END;
+   FUNCTION tracing RETURN BOOLEAN IS BEGIN RETURN g_tracing; END;
+   
+END overdue_pkg;
+/

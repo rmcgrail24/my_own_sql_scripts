@@ -1,0 +1,4 @@
+userid=russ/russ
+control='/home/russ/sql/sql_loader/ctl/pickwick_papers'
+log='/home/russ/sql/sql_loader/log/pickwick_papers'
+errors=2000

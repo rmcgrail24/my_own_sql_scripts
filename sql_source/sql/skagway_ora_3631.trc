@@ -1,0 +1,102 @@
+Trace file /opt/oracle/app/oracle/diag/rdbms/skagway/skagway/trace/skagway_ora_3631.trc
+Oracle Database 11g Enterprise Edition Release 11.1.0.6.0 - Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+ORACLE_HOME = /opt/oracle/app/oracle/product/11.1.0/db_1
+System name:	Linux
+Node name:	werewolf.muirfield.com
+Release:	2.6.26.8-57.fc8
+Version:	#1 SMP Thu Dec 18 19:19:45 EST 2008
+Machine:	i686
+Instance name: skagway
+Redo thread mounted by this instance: 1
+Oracle process number: 18
+Unix process pid: 3631, image: oracle@werewolf.muirfield.com (TNS V1-V3)
+
+
+*** 2013-05-22 14:38:21.618
+*** SESSION ID:(170.25) 2013-05-22 14:38:21.618
+*** CLIENT ID:() 2013-05-22 14:38:21.618
+*** SERVICE NAME:(SYS$USERS) 2013-05-22 14:38:21.618
+*** MODULE NAME:(SQL*Plus) 2013-05-22 14:38:21.618
+*** ACTION NAME:() 2013-05-22 14:38:21.618
+ 
+WAIT #4: nam='SQL*Net message to client' ela= 10 driver id=1650815232 #bytes=1 p3=0 obj#=-1 tim=1369258701616949
+WAIT #4: nam='SQL*Net message from client' ela= 466 driver id=1650815232 #bytes=1 p3=0 obj#=-1 tim=1369258701618698
+=====================
+PARSING IN CURSOR #8 len=52 dep=0 uid=82 oct=47 lid=82 tim=1369258701618999 hv=1029988163 ad='3e59b514' sqlid='9babjv8yq8ru3'
+BEGIN DBMS_OUTPUT.GET_LINES(:LINES, :NUMLINES); END;
+END OF STMT
+PARSE #8:c=0,e=97,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=1,tim=1369258701618978
+WAIT #8: nam='SQL*Net message to client' ela= 10 driver id=1650815232 #bytes=1 p3=0 obj#=-1 tim=1369258701619812
+EXEC #8:c=1000,e=968,p=0,cr=3,cu=0,mis=0,r=1,dep=0,og=1,tim=1369258701620285
+
+*** 2013-05-22 14:38:58.981
+WAIT #8: nam='SQL*Net message from client' ela= 37360509 driver id=1650815232 #bytes=1 p3=0 obj#=-1 tim=1369258738981040
+=====================
+PARSING IN CURSOR #9 len=54 dep=0 uid=82 oct=47 lid=82 tim=1369258738981760 hv=2055695979 ad='3e545820' sqlid='ffvaagtx8fvmb'
+BEGIN hr.populate_sql_trace_test(p_loops => 5); END;
+END OF STMT
+PARSE #9:c=0,e=248,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=1,tim=1369258738981745
+=====================
+PARSING IN CURSOR #6 len=86 dep=1 uid=82 oct=2 lid=82 tim=1369258738982366 hv=3247833140 ad='3e57e810' sqlid='f9qttav0tc01n'
+INSERT INTO SQL_TRACE_TEST (ID, DESCRIPTION) VALUES (:B1 , 'Description for ' || :B1 )
+END OF STMT
+PARSE #6:c=0,e=68,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=1,tim=1369258738982356
+EXEC #6:c=0,e=457,p=0,cr=1,cu=5,mis=0,r=1,dep=1,og=1,tim=1369258738983020
+STAT #6 id=1 cnt=0 pid=0 pos=1 obj=0 op='LOAD TABLE CONVENTIONAL  (cr=1 pr=0 pw=0 time=0 us)'
+=====================
+PARSING IN CURSOR #4 len=86 dep=1 uid=82 oct=2 lid=82 tim=1369258738983581 hv=3247833140 ad='3e57e810' sqlid='f9qttav0tc01n'
+INSERT INTO SQL_TRACE_TEST (ID, DESCRIPTION) VALUES (:B1 , 'Description for ' || :B1 )
+END OF STMT
+EXEC #4:c=0,e=162,p=0,cr=0,cu=1,mis=0,r=1,dep=1,og=1,tim=1369258738983572
+=====================
+PARSING IN CURSOR #8 len=86 dep=1 uid=82 oct=2 lid=82 tim=1369258738983860 hv=3247833140 ad='3e57e810' sqlid='f9qttav0tc01n'
+INSERT INTO SQL_TRACE_TEST (ID, DESCRIPTION) VALUES (:B1 , 'Description for ' || :B1 )
+END OF STMT
+EXEC #8:c=0,e=75,p=0,cr=0,cu=1,mis=0,r=1,dep=1,og=1,tim=1369258738983852
+=====================
+PARSING IN CURSOR #6 len=86 dep=1 uid=82 oct=2 lid=82 tim=1369258738984100 hv=3247833140 ad='3e57e810' sqlid='f9qttav0tc01n'
+INSERT INTO SQL_TRACE_TEST (ID, DESCRIPTION) VALUES (:B1 , 'Description for ' || :B1 )
+END OF STMT
+EXEC #6:c=0,e=69,p=0,cr=0,cu=1,mis=0,r=1,dep=1,og=1,tim=1369258738984092
+=====================
+PARSING IN CURSOR #4 len=86 dep=1 uid=82 oct=2 lid=82 tim=1369258738984396 hv=3247833140 ad='3e57e810' sqlid='f9qttav0tc01n'
+INSERT INTO SQL_TRACE_TEST (ID, DESCRIPTION) VALUES (:B1 , 'Description for ' || :B1 )
+END OF STMT
+EXEC #4:c=0,e=82,p=0,cr=0,cu=1,mis=0,r=1,dep=1,og=1,tim=1369258738984388
+=====================
+PARSING IN CURSOR #8 len=35 dep=1 uid=82 oct=3 lid=82 tim=1369258738984726 hv=3788777626 ad='3e58cbac' sqlid='23ntt1ghx8a4u'
+SELECT COUNT(*) FROM SQL_TRACE_TEST
+END OF STMT
+PARSE #8:c=0,e=110,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=1,tim=1369258738984719
+EXEC #8:c=0,e=102,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=1,tim=1369258738984959
+FETCH #8:c=0,e=464,p=0,cr=7,cu=0,mis=0,r=1,dep=1,og=1,tim=1369258738985629
+STAT #8 id=1 cnt=1 pid=0 pos=1 obj=0 op='SORT AGGREGATE (cr=7 pr=0 pw=0 time=0 us)'
+STAT #8 id=2 cnt=5 pid=1 pos=1 obj=81969 op='TABLE ACCESS FULL SQL_TRACE_TEST (cr=7 pr=0 pw=0 time=1 us cost=2 size=0 card=1)'
+=====================
+PARSING IN CURSOR #6 len=6 dep=1 uid=82 oct=44 lid=82 tim=1369258738986106 hv=255718823 ad='0' sqlid='8ggw94h7mvxd7'
+COMMIT
+END OF STMT
+PARSE #6:c=0,e=37,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=0,tim=1369258738986100
+XCTEND rlbk=0, rd_only=0
+EXEC #6:c=0,e=378,p=0,cr=0,cu=1,mis=0,r=0,dep=1,og=0,tim=1369258738986643
+EXEC #9:c=5000,e=5145,p=0,cr=8,cu=10,mis=0,r=1,dep=0,og=1,tim=1369258738987069
+WAIT #9: nam='log file sync' ela= 12154 buffer#=264 p2=0 p3=0 obj#=-1 tim=1369258738999372
+WAIT #9: nam='SQL*Net message to client' ela= 7 driver id=1650815232 #bytes=1 p3=0 obj#=-1 tim=1369258738999651
+WAIT #9: nam='SQL*Net message from client' ela= 480 driver id=1650815232 #bytes=1 p3=0 obj#=-1 tim=1369258739000202
+=====================
+PARSING IN CURSOR #4 len=52 dep=0 uid=82 oct=47 lid=82 tim=1369258739000477 hv=1029988163 ad='3e59b514' sqlid='9babjv8yq8ru3'
+BEGIN DBMS_OUTPUT.GET_LINES(:LINES, :NUMLINES); END;
+END OF STMT
+PARSE #4:c=0,e=95,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=1,tim=1369258739000467
+WAIT #4: nam='SQL*Net message to client' ela= 10 driver id=1650815232 #bytes=1 p3=0 obj#=-1 tim=1369258739001343
+EXEC #4:c=1000,e=1009,p=0,cr=3,cu=0,mis=0,r=1,dep=0,og=1,tim=1369258739001766
+
+*** 2013-05-22 14:39:26.310
+WAIT #4: nam='SQL*Net message from client' ela= 27308198 driver id=1650815232 #bytes=1 p3=0 obj#=-1 tim=1369258766310171
+=====================
+PARSING IN CURSOR #8 len=55 dep=0 uid=82 oct=42 lid=82 tim=1369258766310750 hv=2655499671 ad='0' sqlid='0kjg1c2g4gdcr'
+ALTER SESSION SET EVENTS '10046 trace name context off'
+END OF STMT
+PARSE #8:c=0,e=92,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=0,tim=1369258766310740
+EXEC #8:c=1000,e=423,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=0,tim=1369258766311329

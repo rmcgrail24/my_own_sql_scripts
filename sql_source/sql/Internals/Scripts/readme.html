@@ -1,0 +1,775 @@
+<html>
+<head>
+ <title>
+  APT Scripts
+ </title>
+ <style>
+  <!-- a:hover{color:#FF6600;} -->
+ </style>
+</head>
+<body link=#FF9933 vlink=#CC9900 alink=#FF6600>
+<basefont face="verdana, arial, helvetica">
+
+<h2 align=center>
+ <font color=#FF6600>
+  APT Scripts
+ </font>
+</h2>
+
+<h3>
+ <font color=#660066>
+  create_xviews.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  Some APT scripts are based directly on the X$ tables, rather than the V$ views.
+  This is necessary where the V$ views do not expose the required information,
+  or where it would be inefficient to query them.
+ </p>
+ <p>
+  Because the X$ tables are only visible to the SYS schema,
+  and because it would be bad practice to do anything as SYS unnecessarily,
+  these scripts require that one create a set of X_$ views
+  that expose the X$ tables to other DBA schemata.
+ </p>
+ <p>
+  This script creates an X_$ view for every X$ table.
+  It must be run as SYS from SQL*Plus.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/create_xviews.sql>
+   7.3, 8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  reset_sqlplus.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  This script is called by many of the other scripts.
+  It is used to return SQL*Plus to a known condition.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/reset_sqlplus.sql>
+   all releases</a>
+ </p>
+</blockquote>
+
+<hr align=left width=300 size=2 color=black>
+
+<h3>
+ <font color=#660066>
+  hidden_parameters.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  This script lists all the hidden parameters, together with their descriptions and whether they can be modified.
+  Note that to modify a hidden parameter with the ALTER SESSION or ALTER SYSTEM statements,
+  it is necessary to enclose the parameter name in quotation marks.
+  See the 8.1 version of the APT script tune_spin_count.sql for an example.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/7.3/hidden_parameters.sql>
+   7.3</a>&nbsp;
+  <a href=sql/hidden_parameters.sql>
+   8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  all_parameters.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  This script reports the values of all parameters including the hidden parameters.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/7.3/all_parameters.sql>
+   7.3</a>&nbsp;
+  <a href=sql/8.0/all_parameters.sql>
+   8.0</a>&nbsp;
+  <a href=sql/all_parameters.sql>
+   8.1</a>
+ </p>
+</blockquote>
+
+<hr align=left width=300 size=2 color=black>
+
+<h3>
+ <font color=#660066>
+  resource_waits.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  Resource waits can often be (nearly) eliminated by database server level tuning.
+  This script shows the major resource types waited for over the life of the instance,
+  in order of severity.
+  It can be used to focus reactive tuning.
+ </p>
+ <p>
+  The average waiting time shown is the average waiting time for each logical wait.
+  A logical wait may be composed of multiple distinct waits,
+  all but the last of which timed out.
+ </p>
+ <p>
+  <a href=lst/resource_waits.lst>
+   View sample listing</a>
+ </p>
+ <p>
+  View script for:
+  <a href=sql/7.3/resource_waits.sql>
+   7.3</a>&nbsp;
+  <a href=sql/resource_waits.sql>
+   8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  routine_waits.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  The average waiting time for routine waits, such as I/O waits,
+  can also be improved by database server level or operating system level tuning.
+  This script reports the average waiting time for these routine waits.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/7.3/routine_waits.sql>
+   7.3</a>&nbsp;
+  <a href=sql/routine_waits.sql>
+   8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  system_times.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  This script reports the total waiting time for both routine and resource waits,
+  together with the CPU time used.
+  The relative contribution of each type of wait to overall response times,
+  and the potential benefit of tuning actions, can be estimated from this information.
+ </p>
+ <p>
+  <a href=lst/system_times.lst>
+   View sample listing</a>
+ </p>
+ <p>
+  View script for:
+  <a href=sql/system_times.sql>
+   7.3, 8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  session_times.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  When a user reports an episode of poor performance,
+  this script can be used to determine whether their session has been working
+  (say on an inefficient query) or waiting for resources, and if so,
+  which resources they have been waiting for.
+  Idle waits are not excluded.
+ </p>
+ <p>
+  <a href=lst/session_times.lst>
+   View sample listing</a>
+ </p>
+ <p>
+  View script for:
+  <a href=sql/session_times.sql>
+   7.3, 8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  resource_waiters.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  If there has been extensive waiting for a particular type of resource,
+  then this script can be used to determine which extant sessions
+  have contributed to or been affected by the problem.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/resource_waiters.sql>
+   7.3, 8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  trace_waits.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  This script is one of our favorites.
+  It finds the top N sessions that have been affected by a particular type of resource wait,
+  and enables event 10046, level 8 in those sessions for the specified period.
+  This event captures every wait event and its wait parameters,
+  and writes the information to the process trace file
+  together with the normal <em>sql_trace</em> output.
+  The wait parameters can then be analyzed
+  to understand exactly what is causing the performance problem.
+ </p>
+ <p>
+  <a href=lst/trace_waits.lst>
+   View sample listing</a>
+ </p>
+ <p>
+  View script for:
+  <a href=sql/trace_waits.sql>
+   7.3, 8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<hr align=left width=300 size=2 color=black>
+
+<h3>
+ <font color=#660066>
+  latch_sleeps.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  If there are <em>latch free</em> waits,
+  then this script can be used to further diagnose the problem.
+  For each latch type, it reports the estimated impact of sleeps,
+  and the number of sleeps per get.
+  It also reports the number of other waits while holding each latch type,
+  together with the latch level.
+ </p>
+ <p>
+  To reduce <em>latch free</em> waits,
+  one should concentrate on the latches with the greatest impact.
+  However, if there are a significant number of other waits while holding those latches,
+  then one should regard those sleeps as a secondary symptom of another problem,
+  such as contention for a higher level latch.
+ </p>
+ <p>
+  <a href=lst/latch_sleeps.lst>
+   View sample listing</a>
+ </p>
+ <p>
+  View script for:
+  <a href=sql/latch_sleeps.sql>
+   7.3, 8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  latch_gets.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  This script reports the breakdown of willing-to-wait gets for each latch type,
+  into simple gets, spin gets and sleep gets.
+  Spin gets and sleep gets are latch gets that require spinning or sleeping respectively.
+  Simple gets require neither.
+ </p>
+ <p>
+  <a href=lst/latch_gets.lst>
+   View sample listing</a>
+ </p>
+ <p>
+  View script for:
+  <a href=sql/latch_gets.sql>
+   7.3, 8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  latch_spins.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  This script compares spin gets to sleep gets
+  as an indicator of the effectiveness of spinning, for each latch type.
+ </p>
+ <p>
+  <a href=lst/latch_spins.lst>
+   View sample listing</a>
+ </p>
+ <p>
+  View script for:
+  <a href=sql/latch_spins.sql>
+   7.3, 8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  <a name=tune_spin_count>tune_spin_count.sql</a>
+ </font>
+</h3>
+<blockquote>
+ <p>
+  This script can be used to dynamically tune the <em>_spin_count</em> parameter
+  of an active instance.
+  It first reports the spin hit rate
+  and average cost of spinning over the life of the instance so far.
+  It then prompts the user to dynamically modify the spin count and
+  wait for a while to measure the effectiveness of the change.
+  After waiting, the spin hit rate and average cost of spinning over the interval are reported.
+  Under uniform load, this script can be run several times to find the optimum spin count range.
+ </p>
+ <p>
+  <a href=lst/tune_spin_count.lst>
+   View sample listing</a>
+ </p>
+ <p>
+  View script for:
+  <a href=sql/8.0/tune_spin_count.sql>
+   7.3 or 8.0</a>&nbsp;
+  <a href=sql/tune_spin_count.sql>
+   8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+<font color=#660066>
+  latch_types.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  This scripts prints a list of the latch types,
+  and reports the number of child latches for each type.
+  If a latch type has multiple child latches,
+  V$LATCH_CHILDREN can be used to determine
+  whether activity against the child latches is evenly distributed.
+  V$LATCH_PARENT should also be checked to see
+  whether there has been any activity against the parent latch.
+ </p>
+ <p>
+  <a href=lst/latch_types.lst>
+   View sample listing</a>
+ </p>
+ <p>
+  View script for:
+  <a href=sql/7.3/latch_types.sql>
+   7.3</a>&nbsp;
+  <a href=sql/latch_types.sql>
+   8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+<font color=#660066>
+  latch_where.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  For those who are very familiar with the layers of the Oracle architecture
+  and their functionality,
+  this script may help them to know where in the code latch requests are failing.
+ </p>
+ <p>
+  <a href=lst/latch_where.lst>
+   View sample listing</a>
+ </p>
+ <p>
+  View script for:
+  <a href=sql/7.3/latch_where.sql>
+   7.3</a>&nbsp;
+  <a href=sql/latch_where.sql>
+   8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<hr align=left width=300 size=2 color=black>
+
+<h3>
+ <font color=#660066>
+  fixed_table_hwms.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  This script is for release 7.3 only.
+  It reports the high water mark usage of the fixed tables
+  that are sized by an init.ora parameter.
+  This is useful to avoid the two extremes of
+  either running out of slots in these tables, or making them so large as to be wasteful.
+  From release 8.0, this script is redundant,
+  because V$RESOURCE_LIMIT provides the same information.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/7.3/fixed_table_hwms.sql>
+   7.3</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  enqueue_stats.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  This script looks at X$KSQST,
+  which contains a breakdown of enqueue gets and enqueue waits by lock type.
+  Unfortunately, there is no indication of the relative duration of these waits,
+  so care must be taken when interpreting the output.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/7.3/enqueue_stats.sql>
+   7.3</a>&nbsp;
+  <a href=sql/enqueue_stats.sql>
+   8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  enqueue_locks.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  Most blocking lock detection scripts fail to consider that
+  processes waiting for, but not yet holding, a lock
+  can block other processes that need a conflicting lock on the same resource.
+  To resolve such problems, it is essential to consider the order of waiters.
+ </p>
+ <p>
+  This script shows all the locks that are held or wanted for each resource,
+  together with the number of seconds since the lock was granted or requested respectively,
+  in order.
+  This script is intended to supplement other blocking lock detection scripts
+  such as Oracle's <em>utllockt.sql</em>.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/enqueue_locks.sql>
+   7.3, 8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<hr align=left width=300 size=2 color=black>
+
+<h3>
+ <font color=#660066>
+  lock_element_lwm.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  In Oracle parallel server, if fine-grained locking is being used,
+  it is normally desirable to have free lock elements at all times
+  (except in VLM environments).
+  This script shows the low water mark of the lock element free list in release 8.0 and beyond.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/lock_element_lwm.sql>
+   8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<hr align=left width=300 size=2 color=black>
+
+<h3>
+ <font color=#660066>
+  fixed_table_columns.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  This script generates a description of all the X$ tables,
+  listing all their columns and their datatypes.
+  We use this whenever we are exposed to a new version of Oracle
+  to see what has changed at the level of the X$ tables.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/fixed_table_columns.sql>
+   7.3, 8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  fixed_view_text.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  This script extracts the SQL statement text for all the V$ views.
+  The V$ views are based on the X$ tables,
+  and reading the SQL statements for these views 
+  is the best way to develop an initial understanding of the X$ tables.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/fixed_view_text.sql>
+   7.3, 8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  keep_sys_packages.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  Marking objects for keeping in the library cache is vital to shared pool performance.
+  This script does the bare minimum of keeping four of the key SYS packages.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/keep_sys_packages.sql>
+   7.3, 8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  keep_sequences.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  From Oracle 7.3, the sequence cache has been part of the library cache,
+  and thus part of the shared pool.
+  A side-effect has been that cached sequence numbers
+  can be aged out of the shared pool and thus lost.
+ </p>
+ <p>
+  This script marks all cached sequences in the database for keeping,
+  so that sequence numbers will never be lost due to aging out of the shared pool.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/keep_sequences.sql>
+   7.3, 8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  keep_schema.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  This script is intended to be used at instance startup to keep all the stored objects
+  in the key application schemata.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/8.0/keep_schema.sql>
+   7.3 or 8.0</a>&nbsp;
+  <a href=sql/keep_schema.sql>
+   8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  keep_cursors.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  Cursors that are executed repeatedly should also be kept. That is what this script does.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/7.3/keep_cursors.sql>
+   7.3</a>&nbsp;
+  <a href=sql/keep_cursors.sql>
+   8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  nice_shared_pool_flush.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  Flushing the shared pool is the only way of coalescing free space in the shared pool,
+  and has little performance impact if everything is kept that should be,
+  particularly if done out of peak hours.
+  In 7x24 environments,
+  we favor flushing the shared pool daily to reduce risk of shared pool problems.
+ </p>
+ <p>
+  This script first calls <em>keep_cursors.sql</em>
+  and <em>keep_sequences.sql</em> prior to flushing,
+  to minimize the unwanted side-effects of flushing the shared pool.
+ </p>
+ <p>
+  View script for:
+  <a href=sql/nice_shared_pool_flush.sql>
+   7.3, 8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  shared_pool_lru_stats.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  The shared pool has two LRU lists for unpinned recreatable chunks -
+  one for transient objects, and one for recurrent use objects.
+  This script shows the current length of the transient and recurrent LRU lists,
+  together with the number of chunks that have been flushed (aged out)
+  and the number of other LRU list operations (adds and removes).
+  These statistics provide feedback on the size of the shared pool.
+ </p>
+ <p>
+  <a href=lst/shared_pool_lru_stats.lst>
+   View sample listing</a>
+ </p>
+ <p>
+  View script for:
+  <a href=sql/7.3/shared_pool_lru_stats.sql>
+   7.3</a>&nbsp;
+  <a href=sql/shared_pool_lru_stats.sql>
+   8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  shared_pool_free_lists.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  Free chunks in the shared pool are maintained on a number of free lists,
+  according to the chunk size.
+  This scripts reports the length and total available free memory on each free list.
+  Long free lists are a major cause of <em>shared pool</em> latch contention.
+ </p>
+ <p>
+  <a href=lst/shared_pool_free_lists.lst>
+   View sample listing</a>
+ </p>
+ <p>
+  View script for:
+  <a href=sql/7.3/shared_pool_free_lists.sql>
+   7.3</a>&nbsp;
+  <a href=sql/shared_pool_free_lists.sql>
+   8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  shared_pool_spare_free.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  If the shared pool is oversized,
+  some spare free memory will be reserved for some time
+  in the main permanent memory chunk within the shared pool.
+  This script shows how much such memory remains (if any).
+ </p>
+ <p>
+  View script for:
+  <a href=sql/7.3/shared_pool_spare_free.sql>
+   7.3</a>&nbsp;
+  <a href=sql/shared_pool_spare_free.sql>
+   8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  shared_pool_summary.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  This script gives an indication of
+  the balance between free, recreatable, freeable and permanent memory in the shared pool,
+  as well as a breakdown of the chunks and their usage.
+ </p>
+ <p>
+  <a href=lst/shared_pool_summary.lst>
+   View sample listing</a>
+ </p>
+ <p>
+  View script for:
+  <a href=sql/7.3/shared_pool_summary.sql>
+   7.3</a>&nbsp;
+  <a href=sql/shared_pool_summary.sql>
+   8.0 or 8.1</a>
+ </p>
+</blockquote>
+
+<h3>
+ <font color=#660066>
+  reserved_pool_hwm.sql
+ </font>
+</h3>
+<blockquote>
+ <p>
+  From Oracle 8.0,
+  the reserved part of the shared pool defaults to 5% of the size of the pool.
+  In many cases, this is wasteful.
+  One can use this script to see how much of the reserved pool is actually being used.
+ </p>
+ <p>
+  <a href=lst/reserved_pool_hwm.lst>
+   View sample listing</a>
+ </p>
+ <p>
+  View script for:
+  <a href=sql/7.3/reserved_pool_hwm.sql>
+   7.3</a>&nbsp;
+  <a href=sql/8.0/reserved_pool_hwm.sql>
+   8.0</a>&nbsp;
+  <a href=sql/reserved_pool_hwm.sql>
+   8.1</a>
+ </p>
+</blockquote>
+
+<hr align=left width=300 size=2 color=black>
+<font size=2 color=#660066>
+ <strong>
+  Copyright © 1999 Ixora Pty Ltd
+ </strong>
+</font>
+</body>
+</html>

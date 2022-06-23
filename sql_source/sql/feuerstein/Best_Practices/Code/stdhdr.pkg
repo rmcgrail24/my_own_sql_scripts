@@ -1,0 +1,871 @@
+/* Formatted by PL/Formatter v3.0.5.0 on 2000/07/04 05:00 */
+
+CREATE OR REPLACE PACKAGE stdhdr
+IS
+/* TO DO:
+- Justify spending time on this project.
+- finish assertion logic
+- finish validation functions
+*/
+
+/*
+<VERSION>
+   1.0.5
+</VERSION>
+
+<FILENAME>
+   stdhdr.pkg
+</FILENAME>
+
+<AUTHOR>
+   Steven Feuerstein
+</AUTHOR>
+
+<SUMMARY>
+   API to standard headers in code
+</SUMMARY>
+
+<COPYRIGHT>
+   Steven Feuerstein
+</COPYRIGHT>
+
+<YEARS>
+   2000
+</YEARS>
+
+<OVERVIEW>
+   Rather than simply offer a standard header for
+   programs, this package does that and then offers
+   a package-based API to query program units for
+   information stored in the header.
+</OVERVIEW>
+
+<DEPENDENCIES>
+   ALL_SOURCE data dictionary view
+</DEPENDENCIES>
+
+<EXCEPTIONS>
+   None
+</EXCEPTIONS>
+
+Modification History
+   Default Date format: DD/MM/YYYY
+Date       By        Modification
+---------- --------- ------------------------------------
+<MODIFICATIONS>
+06/30/2000 SEF       Change to XML-compatible syntax
+06/07/2000 SEF       Program created
+</MODIFICATIONS>
+*/
+   c_true CONSTANT CHAR (1) := 'T';
+   c_false CONSTANT CHAR (1) := 'F';
+   c_space CONSTANT CHAR (1) := ' ';
+   c_delim CONSTANT CHAR (1) := '|';
+   c_lineprefix CONSTANT CHAR (1) := '*';
+   c_prefix CONSTANT CHAR (1) := '<';
+   c_suffix CONSTANT CHAR (1) := '>';
+   c_endchar CONSTANT CHAR (1) := '/';
+   c_version CONSTANT VARCHAR2 (30) := 'VERSION';
+   c_filename CONSTANT VARCHAR2 (30) := 'FILENAME';
+   c_author CONSTANT VARCHAR2 (30) := 'AUTHOR';
+   c_summary CONSTANT VARCHAR2 (30) := 'SUMMARY';
+   c_copyright CONSTANT VARCHAR2 (30) := 'COPYRIGHT';
+   c_dates CONSTANT VARCHAR2 (30) := 'YEARS';
+   c_overview CONSTANT VARCHAR2 (30) := 'OVERVIEW';
+   c_modifications CONSTANT VARCHAR2 (30) := 'MODIFICATIONS';
+   content_missing EXCEPTION;
+
+   TYPE text_tt IS TABLE OF VARCHAR2 (200)
+      INDEX BY BINARY_INTEGER;
+
+   TYPE modification_rt IS RECORD(
+   
+      moddate                       DATE,
+      modwho                        VARCHAR2 (30),
+      modwhat                       VARCHAR2 (100));
+
+   TYPE modification_tt IS TABLE OF modification_rt
+      INDEX BY BINARY_INTEGER;
+
+   PROCEDURE setlineprefix (chr_in IN VARCHAR2);
+
+   FUNCTION lineprefix
+      RETURN VARCHAR2;
+
+   FUNCTION version (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL
+   )
+      RETURN VARCHAR2;
+
+   FUNCTION filename (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL
+   )
+      RETURN VARCHAR2;
+
+   FUNCTION author (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL
+   )
+      RETURN VARCHAR2;
+
+   FUNCTION summary (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL
+   )
+      RETURN VARCHAR2;
+
+   FUNCTION copyright (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL
+   )
+      RETURN VARCHAR2;
+
+   FUNCTION copyright_dates (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL
+   )
+      RETURN VARCHAR2;
+
+   FUNCTION overview (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL
+   )
+      RETURN text_tt;
+
+   FUNCTION overview_str (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL,
+      delim_in IN VARCHAR2 := c_delim
+   )
+      RETURN VARCHAR2;
+
+   FUNCTION modifications (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL,
+      date_format_in IN VARCHAR2 := 'MM/DD/YYYY'
+   )
+      RETURN modification_tt;
+
+   FUNCTION modifications_str (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL,
+      delim_in IN VARCHAR2 := c_delim,
+      date_format_in IN VARCHAR2 := 'MM/DD/YYYY'
+   )
+      RETURN VARCHAR2;
+
+   FUNCTION last_modification (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL,
+      date_format_in IN VARCHAR2 := 'MM/DD/YYYY'
+   )
+      RETURN modification_rt;
+
+   FUNCTION last_modification_str (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL,
+      delim_in IN VARCHAR2 := c_delim,
+      date_format_in IN VARCHAR2 := 'MM/DD/YYYY'
+   )
+      RETURN VARCHAR2;
+
+   FUNCTION last_modification_date (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL,
+      date_format_in IN VARCHAR2 := 'MM/DD/YYYY'
+   )
+      RETURN DATE;
+
+   PROCEDURE display;
+
+   -- Does program have standard header?
+   FUNCTION present (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL,
+      all_required_in IN BOOLEAN := FALSE,
+      version_required_in IN BOOLEAN := FALSE,
+      filename_required_in IN BOOLEAN := FALSE,
+      author_required_in IN BOOLEAN := FALSE,
+      summary_required_in IN BOOLEAN := FALSE,
+      copyright_required_in IN BOOLEAN := FALSE,
+      years_required_in IN BOOLEAN := FALSE,
+      overview_required_in IN BOOLEAN := FALSE,
+      modifications_required_in IN BOOLEAN := FALSE
+   )
+      RETURN BOOLEAN;
+
+   FUNCTION present (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL,
+      all_required_in IN VARCHAR2 := c_false,
+      version_required_in IN VARCHAR2 := c_false,
+      filename_required_in IN VARCHAR2 := c_false,
+      author_required_in IN VARCHAR2 := c_false,
+      summary_required_in IN VARCHAR2 := c_false,
+      copyright_required_in IN VARCHAR2 := c_false,
+      years_required_in IN VARCHAR2 := c_false,
+      overview_required_in IN VARCHAR2 := c_false,
+      modifications_required_in IN VARCHAR2 := c_false
+   )
+      RETURN BOOLEAN;
+
+   PROCEDURE setconfig (
+      content_required_in IN BOOLEAN := FALSE
+   );
+END stdhdr;
+/
+
+SHO ERR
+
+CREATE OR REPLACE PACKAGE BODY stdhdr
+IS
+   g_lineprefix VARCHAR2 (5) := c_lineprefix;
+
+   TYPE config_rt IS RECORD(
+   
+      missing_keyword               VARCHAR2 (100),
+      content_required              BOOLEAN);
+
+   g_config config_rt;
+
+   CURSOR code_cur (
+      owner_in IN VARCHAR2,
+      program_in IN VARCHAR2,
+      like_in IN VARCHAR2 := '%',
+      start_in IN PLS_INTEGER := 1,
+      end_in IN PLS_INTEGER := NULL
+   )
+   IS
+      SELECT line, text
+        FROM all_source
+       WHERE owner = NVL (UPPER (owner_in), USER)
+         AND name = UPPER (program_in)
+         AND TYPE != 'PACKAGE BODY'
+         -- Only package specifications
+         AND UPPER (text) LIKE
+                UPPER (like_in)
+         AND (
+                   (
+                      line BETWEEN NVL (start_in, 1) AND end_in
+                   )
+                OR (
+                          line >= NVL (start_in, 1)
+                      AND end_in IS NULL
+                   )
+             )
+       ORDER BY line;
+
+   PROCEDURE setlineprefix (chr_in IN VARCHAR2)
+   IS
+   BEGIN
+      g_lineprefix := SUBSTR (chr_in, 1, 5);
+   END;
+
+   FUNCTION lineprefix
+      RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN g_lineprefix;
+   END;
+
+   PROCEDURE open_code_cur (
+      owner_in IN VARCHAR2,
+      program_in IN VARCHAR2,
+      like_in IN VARCHAR2 := '%',
+      start_in IN PLS_INTEGER := 1,
+      end_in IN PLS_INTEGER := NULL
+   )
+   IS
+   BEGIN
+      IF code_cur%ISOPEN
+      THEN
+         CLOSE code_cur;
+      END IF;
+
+      OPEN code_cur (
+         owner_in,
+         program_in,
+         like_in,
+         start_in,
+         end_in
+      );
+   END;
+
+   FUNCTION stripped_val (str_in IN VARCHAR2)
+      RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN (
+                RTRIM (
+                   RTRIM (
+                      LTRIM (
+                         LTRIM (
+                            str_in,
+                            NVL (lineprefix, c_space)
+                         ),
+                         c_space
+                      ),
+                      c_space
+                   ),
+                   CHR (10)
+                )
+             );
+   END;
+
+   PROCEDURE getlinewith (
+      owner_in IN VARCHAR2,
+      program_in IN VARCHAR2,
+      like_in IN VARCHAR2 := '%',
+      line_out OUT code_cur%ROWTYPE,
+      end_in IN BOOLEAN := FALSE
+   )
+   IS
+      v_prefix VARCHAR2 (2) := c_prefix;
+   BEGIN
+      IF end_in
+      THEN
+         v_prefix := c_prefix || c_endchar;
+      END IF;
+
+      --p.l ('%' || v_prefix || like_in || c_suffix || '%');
+      open_code_cur (
+         owner_in,
+         program_in,
+         '%' || v_prefix || like_in || c_suffix || '%'
+      );
+      FETCH code_cur INTO line_out;
+      CLOSE code_cur;
+   END;
+
+   PROCEDURE assert_keyword_present (
+      keyword_in IN VARCHAR2,
+      start_rec IN code_cur%ROWTYPE,
+      end_rec IN code_cur%ROWTYPE
+   )
+   IS
+   BEGIN
+      IF g_config.content_required
+      THEN
+         IF    start_rec.line IS NULL
+            OR end_rec.line IS NULL
+         THEN
+            g_config.missing_keyword := keyword_in;
+            RAISE content_missing;
+         END IF;
+      END IF;
+   END;
+
+   PROCEDURE assert_content_present (
+      keyword_in IN VARCHAR2,
+      linecount_in IN PLS_INTEGER
+   )
+   IS
+   BEGIN
+      NULL;
+   END;
+
+   PROCEDURE getboundaries (
+      owner_in IN VARCHAR2,
+      program_in IN VARCHAR2,
+      keyword_in IN VARCHAR2,
+      start_rec IN OUT code_cur%ROWTYPE,
+      end_rec IN OUT code_cur%ROWTYPE
+   )
+   IS
+   BEGIN
+      getlinewith (
+         owner_in,
+         program_in,
+         keyword_in,
+         start_rec,
+         FALSE
+      );                             --p.l (start_rec.line);
+      getlinewith (
+         owner_in,
+         program_in,
+         keyword_in,
+         end_rec,
+         TRUE
+      );                               --p.l (end_rec.line);
+      assert_keyword_present (
+         keyword_in,
+         start_rec,
+         end_rec
+      );
+   END;
+
+   PROCEDURE getlines (
+      owner_in IN VARCHAR2,
+      program_in IN VARCHAR2,
+      keyword_in IN VARCHAR2,
+      lines_out IN OUT text_tt
+   )
+   IS
+      start_rec code_cur%ROWTYPE;
+      end_rec code_cur%ROWTYPE;
+   BEGIN
+      lines_out.delete;
+      getboundaries (
+         owner_in,
+         program_in,
+         keyword_in,
+         start_rec,
+         end_rec
+      );
+
+      FOR rec IN code_cur (
+                    owner_in,
+                    program_in,
+                    start_in => start_rec.line + 1,
+                    end_in => end_rec.line - 1
+                 )
+      LOOP
+         lines_out (NVL (lines_out.LAST, 0) + 1) :=
+                                    stripped_val (rec.text);
+      END LOOP;
+
+      assert_content_present (keyword_in, lines_out.COUNT);
+   END;
+
+   FUNCTION lines2string (
+      lines_in IN text_tt,
+      delim_in IN VARCHAR2 := c_delim
+   )
+      RETURN VARCHAR2
+   IS
+      indx PLS_INTEGER := lines_in.FIRST;
+      retval VARCHAR2 (32767);
+   BEGIN
+      --p.l (lines_in.count);
+      LOOP
+         EXIT WHEN indx IS NULL;
+         retval := retval || delim_in || lines_in (indx);
+         indx := lines_in.NEXT (indx);
+      END LOOP;
+
+      RETURN (LTRIM (retval, NVL (delim_in, c_space)));
+   END;
+
+   FUNCTION post_colon (str_in IN VARCHAR2)
+      RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN LTRIM (SUBSTR (str_in, INSTR (str_in, ':') + 1));
+   END;
+
+   FUNCTION strval (
+      keyword_in IN VARCHAR2,
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL
+   )
+      RETURN VARCHAR2
+   IS
+      lines text_tt;
+   BEGIN
+      getlines (schema_in, program_in, keyword_in, lines);
+      RETURN lines2string (lines);
+   END;
+
+   FUNCTION version (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL
+   )
+      RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN strval (c_version, program_in, schema_in);
+   END;
+
+   FUNCTION filename (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL
+   )
+      RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN strval (c_filename, program_in, schema_in);
+   END;
+
+   FUNCTION author (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL
+   )
+      RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN strval (c_author, program_in, schema_in);
+   END;
+
+   FUNCTION summary (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL
+   )
+      RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN strval (c_summary, program_in, schema_in);
+   END;
+
+   FUNCTION copyright (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL
+   )
+      RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN strval (c_copyright, program_in, schema_in);
+   END;
+
+   FUNCTION copyright_dates (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL
+   )
+      RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN strval (c_dates, program_in, schema_in);
+   END;
+
+   FUNCTION overview (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL
+   )
+      RETURN text_tt
+   IS
+      lines text_tt;
+   BEGIN
+      getlines (schema_in, program_in, c_overview, lines);
+      RETURN lines;
+   END;
+
+   FUNCTION overview_str (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL,
+      delim_in IN VARCHAR2 := c_delim
+   )
+      RETURN VARCHAR2
+   IS
+      overview_lines text_tt;
+   BEGIN
+      overview_lines := overview (program_in, schema_in);
+      RETURN (lines2string (overview_lines));
+   END;
+
+   FUNCTION modifications (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL,
+      date_format_in IN VARCHAR2 := 'MM/DD/YYYY'
+   )
+      RETURN modification_tt
+   IS
+      retval modification_tt;
+      indx PLS_INTEGER;
+      space1 PLS_INTEGER;
+      space2 PLS_INTEGER;
+      str VARCHAR2 (200);
+      start_rec code_cur%ROWTYPE;
+      end_rec code_cur%ROWTYPE;
+   BEGIN
+      getboundaries (
+         schema_in,
+         program_in,
+         c_modifications,
+         start_rec,
+         end_rec
+      );
+
+      FOR rec IN code_cur (
+                    schema_in,
+                    program_in,
+                    start_in => start_rec.line + 1,
+                    end_in => end_rec.line - 1
+                 )
+      LOOP
+         str := stripped_val (rec.text);
+         indx := NVL (retval.LAST, 0) + 1;
+         space1 := INSTR (str, c_space, 1);
+         space2 := INSTR (str, c_space, 1, 2);
+         retval (indx).moddate :=
+           TO_DATE (
+              SUBSTR (str, 1, space1 - 1),
+              date_format_in
+           );
+         retval (indx).modwho :=
+           LTRIM (
+              SUBSTR (
+                 str,
+                 space1 + 1,
+                 (space2 - 1) - (space1 + 1) + 1
+              )
+           );
+         retval (indx).modwhat :=
+                           LTRIM (SUBSTR (str, space2 + 1));
+      END LOOP;
+
+      assert_content_present (c_modifications, retval.COUNT);
+      RETURN retval;
+   EXCEPTION
+      WHEN OTHERS
+      THEN
+         IF SQLCODE BETWEEN -1899 AND -1800
+         THEN
+            DBMS_OUTPUT.put_line (
+               'Invalid modifications date value "' ||
+                  SUBSTR (str, 1, space1 - 1) ||
+                  '" for specified format "' ||
+                  date_format_in ||
+                  '".'
+            );
+            RAISE;
+         ELSE
+            RAISE;
+         END IF;
+   END;
+
+   FUNCTION modline (
+      onemod IN modification_rt,
+      delim_in IN VARCHAR2,
+      date_format_in IN VARCHAR2
+   )
+      RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN (
+                TO_CHAR (onemod.moddate, date_format_in) ||
+                   delim_in ||
+                   onemod.modwho ||
+                   delim_in ||
+                   onemod.modwhat
+             );
+   END;
+
+   FUNCTION modifications_str (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL,
+      delim_in IN VARCHAR2 := c_delim,
+      date_format_in IN VARCHAR2 := 'MM/DD/YYYY'
+   )
+      RETURN VARCHAR2
+   IS
+      mods modification_tt;
+      indx PLS_INTEGER;
+      retval VARCHAR2 (32767);
+   BEGIN
+      mods :=
+        modifications (
+           program_in,
+           schema_in,
+           date_format_in
+        );
+      indx := mods.FIRST;
+
+      WHILE indx IS NOT NULL
+      LOOP
+         retval :=
+           retval || delim_in ||
+              modline (
+                 mods (indx),
+                 delim_in,
+                 date_format_in
+              );
+         indx := mods.NEXT (indx);
+      END LOOP;
+
+      RETURN (LTRIM (retval, NVL (delim_in, c_space)));
+   END;
+
+   FUNCTION last_modification (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL,
+      date_format_in IN VARCHAR2 := 'MM/DD/YYYY'
+   )
+      RETURN modification_rt
+   IS
+      mods modification_tt;
+      indx PLS_INTEGER;
+      retval modification_rt;
+   BEGIN
+      mods :=
+        modifications (
+           program_in,
+           schema_in,
+           date_format_in
+        );
+      indx := mods.FIRST;
+
+      LOOP
+         EXIT WHEN indx IS NULL;
+
+         IF retval.moddate IS NULL
+         THEN
+            retval := mods (indx);
+         ELSIF retval.moddate < mods (indx).moddate
+         THEN
+            retval := mods (indx);
+         END IF;
+
+         indx := mods.NEXT (indx);
+      END LOOP;
+
+      RETURN retval;
+   END;
+
+   FUNCTION last_modification_str (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL,
+      delim_in IN VARCHAR2 := c_delim,
+      date_format_in IN VARCHAR2 := 'MM/DD/YYYY'
+   )
+      RETURN VARCHAR2
+   IS
+      lastmod modification_rt;
+   BEGIN
+      lastmod :=
+        last_modification (
+           program_in,
+           schema_in,
+           date_format_in
+        );
+
+      IF lastmod.moddate IS NULL
+      THEN
+         RETURN NULL;
+      ELSE
+         RETURN (
+                   modline (
+                      lastmod,
+                      delim_in,
+                      date_format_in
+                   )
+                );
+      END IF;
+   END;
+
+   FUNCTION last_modification_date (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL,
+      date_format_in IN VARCHAR2 := 'MM/DD/YYYY'
+   )
+      RETURN DATE
+   IS
+      lastmod modification_rt;
+   BEGIN
+      lastmod :=
+        last_modification (
+           program_in,
+           schema_in,
+           date_format_in
+        );
+      RETURN lastmod.moddate;
+   END;
+
+   PROCEDURE pl (str IN VARCHAR2)
+   IS
+      crloc PLS_INTEGER;
+      startloc PLS_INTEGER := 1;
+   BEGIN
+      LOOP
+         crloc := INSTR (str, CHR (10), startloc);
+
+         IF crloc = 0
+         THEN
+            DBMS_OUTPUT.put_line (SUBSTR (str, startloc));
+            EXIT;
+         ELSE
+            DBMS_OUTPUT.put_line (
+               SUBSTR (str, startloc, crloc - startloc)
+            );
+            startloc := crloc + 1;
+         END IF;
+      END LOOP;
+   END;
+
+   FUNCTION present (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL,
+      all_required_in IN BOOLEAN := FALSE,
+      version_required_in IN BOOLEAN := FALSE,
+      filename_required_in IN BOOLEAN := FALSE,
+      author_required_in IN BOOLEAN := FALSE,
+      summary_required_in IN BOOLEAN := FALSE,
+      copyright_required_in IN BOOLEAN := FALSE,
+      years_required_in IN BOOLEAN := FALSE,
+      overview_required_in IN BOOLEAN := FALSE,
+      modifications_required_in IN BOOLEAN := FALSE
+   )
+      RETURN BOOLEAN
+   IS
+   BEGIN
+      RETURN NULL;
+   END;
+
+   FUNCTION present (
+      program_in IN VARCHAR2,
+      schema_in IN VARCHAR2 := NULL,
+      all_required_in IN VARCHAR2 := c_false,
+      version_required_in IN VARCHAR2 := c_false,
+      filename_required_in IN VARCHAR2 := c_false,
+      author_required_in IN VARCHAR2 := c_false,
+      summary_required_in IN VARCHAR2 := c_false,
+      copyright_required_in IN VARCHAR2 := c_false,
+      years_required_in IN VARCHAR2 := c_false,
+      overview_required_in IN VARCHAR2 := c_false,
+      modifications_required_in IN VARCHAR2 := c_false
+   )
+      RETURN BOOLEAN
+   IS
+   BEGIN
+      RETURN NULL;
+   END;
+
+   PROCEDURE setconfig (
+      content_required_in IN BOOLEAN := FALSE
+   )
+   IS
+   BEGIN
+      g_config.content_required := content_required_in;
+   END;
+
+   PROCEDURE display
+   IS
+   BEGIN
+      pl (
+'/*
+<VERSION>
+</VERSION>
+
+<FILENAME>
+</FILENAME>
+
+<AUTHOR>
+</AUTHOR>
+
+<SUMMARY>
+</SUMMARY>
+
+<COPYRIGHT>
+</COPYRIGHT>
+
+<YEARS>
+</YEARS>
+
+<OVERVIEW>
+</OVERVIEW>
+
+Modification History
+   Default Date format: DD/MM/YYYY
+Date       By        Modification
+---------- --------- ------------------------------------
+<MODIFICATIONS>
+                     Program created
+</MODIFICATIONS>
+*/'
+      );
+   END;
+
+END stdhdr;
+/
+
+SHOW ERR

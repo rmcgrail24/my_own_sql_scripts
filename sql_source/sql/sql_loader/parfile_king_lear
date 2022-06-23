@@ -1,0 +1,4 @@
+userid=russ/russ
+control='/home/russ/sql/sql_loader/ctl/king_lear'
+log='/home/russ/sql/sql_loader/log/king_lear'
+errors=2000

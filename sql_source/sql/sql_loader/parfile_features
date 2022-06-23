@@ -1,0 +1,4 @@
+userid=russ/russ
+control='/home/russ/sql/sql_loader/ctl/features'
+log='/home/russ/sql/sql_loader/log/features'
+errors=2000

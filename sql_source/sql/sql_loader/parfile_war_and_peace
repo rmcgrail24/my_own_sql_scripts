@@ -1,0 +1,4 @@
+userid=russ/russ
+control='/home/russ/sql/sql_loader/ctl/war_and_peace'
+log='/home/russ/sql/sql_loader/log/war_and_peace'
+errors=2000

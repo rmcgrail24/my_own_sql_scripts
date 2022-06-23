@@ -1,0 +1,4 @@
+userid=hr/hr
+control='/home/russ/sql/sql_loader/ctl/all_text_all_tables'
+log='/home/russ/sql/sql_loader/log/all_text_all_tables'
+errors=2000

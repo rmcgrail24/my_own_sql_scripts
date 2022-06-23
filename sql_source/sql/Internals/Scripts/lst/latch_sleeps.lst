@@ -1,0 +1,27 @@
+SQL> @latch_sleeps
+
+LATCH TYPE                          IMPACT SLEEP RATE WAITS HOLDING   LEVEL
+------------------------------ ----------- ---------- ------------- -------
+library cache                        11224      0.03%           256       5
+cache buffers chains                  1295      0.00%             0       1
+redo allocation                        713      0.01%          9613       7
+system commit number                   373      0.00%            66       8
+enqueue hash chains                    221      0.00%             3       4
+redo copy                              210     22.30%             0       6
+shared pool                            166      0.01%          1434       7
+cache buffers lru chain                146      0.01%           336       3
+messages                               135      0.01%             0       8
+session allocation                     113      0.02%             0       5
+row cache objects                       86      0.00%             0       4
+enqueues                                75      0.00%           624       5
+latch wait list                         48      0.08%             1       9
+session idle bit                        47      0.00%             0       1
+undo global data                        14      0.00%             0       5
+multiblock read objects                 13      0.00%             8       3
+sequence cache                          11      0.00%             0       8
+dml lock allocation                     10      0.00%             0       3
+transaction allocation                  10      0.00%             0       8
+list of block allocation                 4      0.00%             0       3
+modify parameter values                  2      0.03%             0       0
+process allocation                       1      0.02%             0       0
+

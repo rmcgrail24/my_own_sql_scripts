@@ -1,0 +1,33 @@
+select power(10, 2) from dual
+/
+select 1601.916718 * power(10, 2) from dual
+/
+select 1601.916718 * power(10, 2) + 0.5 from dual
+/
+select floor(1601.916718 * power(10, 2) + 0.5) from dual
+/
+select power(10, 2) from dual
+/
+select floor(1601.916718 * power(10, 2) + 0.5) * power(10, -2) from dual
+/
+select round(1601.916718, 2) from dual
+/
+select power(10, -3) from dual
+/
+select 1601.916718 * power(10, -3) from dual
+/
+select 1601.916718 * power(10, -3) + 0.5 from dual
+/
+select floor(1601.916718 * power(10, -3) + 0.5) from dual
+/
+select power(10, 3) from dual
+/
+select floor(1601.916718 * power(10, -3) + 0.5) * power(10, 3) from dual
+/
+select round(1601.916718,-3) from dual
+/
+select round(1601.916718) from dual
+/
+select last_name, salary, sysdate - hire_date, round(sysdate - hire_date) Bonus
+from employees
+where job_id = 'SA_MAN';

@@ -1,0 +1,133 @@
+/* Formatted by PL/Formatter v3.1.2.1 on 2001/01/21 21:32 */
+
+CREATE TABLE job (
+   id INTEGER,
+   name VARCHAR2(100),
+   what VARCHAR2(2000),
+   next_date DATE DEFAULT SYSDATE,
+   interval VARCHAR2(1000) DEFAULT 'null');
+
+CREATE OR REPLACE PACKAGE myjob
+IS
+   FUNCTION name (id_in IN job.id%TYPE)
+      RETURN job.name%TYPE;
+
+   FUNCTION id (name_in IN job.name%TYPE)
+      RETURN job.id%TYPE;
+
+   FUNCTION submit (
+      name_in        IN   job.name%TYPE,
+      what_in        IN   job.what%TYPE,
+      next_date_in   IN   DATE := SYSDATE,
+      interval_in    IN   job.interval%TYPE := NULL
+   )
+      RETURN job.id%TYPE;
+
+   PROCEDURE remove (name_in IN job.name%TYPE);
+
+   PROCEDURE broken (
+      name_in        IN   job.name%TYPE,
+      broken_in      IN   BOOLEAN,
+      next_date_in   IN   DATE := SYSDATE
+   );
+END myjob;
+/
+
+CREATE OR REPLACE PACKAGE BODY myjob
+IS
+   FUNCTION name (id_in IN job.id%TYPE)
+      RETURN job.name%TYPE
+   IS
+      retval   job.name%TYPE;
+   BEGIN
+      SELECT name
+        INTO retval
+        FROM job
+       WHERE id = name.id_in;
+      RETURN retval;
+   EXCEPTION
+      WHEN NO_DATA_FOUND
+      THEN
+         RETURN NULL;
+   END name;
+
+   FUNCTION id (name_in IN job.name%TYPE)
+      RETURN job.id%TYPE
+   IS
+      retval   job.id%TYPE;
+   BEGIN
+      SELECT id
+        INTO retval
+        FROM job
+       WHERE name = id.name_in;
+      RETURN retval;
+   EXCEPTION
+      WHEN NO_DATA_FOUND
+      THEN
+         RETURN NULL;
+   END id;
+
+   FUNCTION submit (
+      name_in        IN   job.name%TYPE,
+      what_in        IN   job.what%TYPE,
+      next_date_in   IN   DATE := SYSDATE,
+      interval_in    IN   job.interval%TYPE := NULL
+   )
+      RETURN job.id%TYPE
+   IS
+      retval   job.id%TYPE;
+   BEGIN
+      DBMS_JOB.submit (retval,
+         what_in,
+         next_date_in,
+         interval_in
+      );
+
+      INSERT INTO job
+                  (id, name, what, next_date, interval)
+           VALUES (
+              retval,
+              name_in,
+              what_in,
+              next_date_in,
+              interval_in
+           );
+
+      COMMIT;
+      RETURN retval;
+   END submit;
+
+   PROCEDURE remove (name_in IN job.name%TYPE)
+   IS
+      l_id   job.id%TYPE;
+   BEGIN
+      l_id := myjob.id (name_in);
+
+      IF l_id IS NOT NULL
+      THEN
+         DBMS_JOB.remove (l_id);
+      END IF;
+   END remove;
+
+   PROCEDURE broken (
+      name_in        IN   job.name%TYPE,
+      broken_in      IN   BOOLEAN,
+      next_date_in   IN   DATE := SYSDATE
+   )
+   IS
+      l_id   job.id%TYPE;
+   BEGIN
+      l_id := myjob.id (name_in);
+
+      IF l_id IS NOT NULL
+      THEN
+         DBMS_JOB.broken (l_id, broken_in, next_date_in);
+      END IF;
+   END broken;
+END myjob;
+/
+
+
+
+
+

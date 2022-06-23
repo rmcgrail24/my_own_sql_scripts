@@ -1,0 +1,37 @@
+SQL> @system_times
+
+EVENT                                                            TIME_WAITED
+---------------------------------------------------------------- -----------
+CPU used by this session                                             9243158
+db file sequential read                                              2413689
+db file parallel write                                               1482705
+db file scattered read                                                630769
+log file sync                                                         484700
+log file parallel write                                               462048
+control file parallel write                                           188444
+enqueue                                                               102925
+db file single write                                                   81853
+log file switch completion                                             50042
+buffer busy waits                                                      35364
+SQL*Net message to client                                              23856
+write complete waits                                                   14239
+rdbms ipc reply                                                         8742
+latch free                                                              7675
+SQL*Net more data from client                                           4673
+switch logfile command                                                  4624
+SQL*Net more data to client                                             3132
+log file single write                                                   1526
+control file sequential read                                             652
+log file sequential read                                                 239
+library cache pin                                                        162
+process startup                                                           53
+undo segment extension                                                    39
+library cache load lock                                                   33
+control file single write                                                 32
+buffer deadlock                                                           25
+SQL*Net message to dblink                                                  3
+SQL*Net break/reset to client                                              2
+instance state change                                                      0
+SQL*Net more data from dblink                                              0
+row cache lock                                                             0
+

@@ -1,0 +1,4 @@
+userid=russ/russ
+control='/home/russ/sql/sql_loader/ctl/romeo_and_juliet'
+log='/home/russ/sql/sql_loader/log/romeo_and_juliet'
+errors=2000

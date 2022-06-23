@@ -1,0 +1,266 @@
+CREATE OR REPLACE PACKAGE pe_book
+
+-- Wrapper around pipe based on book
+
+-- NOTE: EXECUTE authority on DBMS_LOCK is required.
+--   Issue this command from SYS:
+--   GRANT EXECUTE ON DBMS_LOCK TO PUBLIC;
+
+IS
+   c_name   CONSTANT VARCHAR2 (200) := 'BOOK_pipe';
+
+   -- Set the pipe name to your choice!
+   PROCEDURE setdefname (name IN VARCHAR2)
+   FUNCTION defname RETURN VARCHAR2;
+
+/* Overloadings of send */
+
+   PROCEDURE send (
+      isbn_in             IN book.isbn%TYPE DEFAULT NULL,
+      title_in            IN book.title%TYPE DEFAULT NULL,
+      summary_in          IN book.summary%TYPE DEFAULT NULL,
+      author_in           IN book.author%TYPE DEFAULT NULL,
+      date_published_in   IN book.date_published%TYPE DEFAULT NULL,
+      page_count_in       IN book.page_count%TYPE DEFAULT NULL,
+      wait                IN INTEGER := 0
+   );
+
+   PROCEDURE send (rec_in IN book%ROWTYPE, wait IN INTEGER := 0);
+
+/* Overloadings of receive */
+
+   PROCEDURE receive (
+      isbn_out             OUT book.isbn%TYPE,
+      title_out            OUT book.title%TYPE,
+      summary_out          OUT book.summary%TYPE,
+      author_out           OUT book.author%TYPE,
+      date_published_out   OUT book.date_published%TYPE,
+      page_count_out       OUT book.page_count%TYPE,
+      wait                 IN  INTEGER := 0
+   );
+
+   PROCEDURE receive (
+      rec_out   OUT  book%ROWTYPE,
+      wait      IN   INTEGER := 0
+   );
+
+/* Returns Nth status and action */
+
+   FUNCTION status (pos IN INTEGER := 0)
+      RETURN INTEGER;
+
+   FUNCTION action (pos IN INTEGER := 0)
+      RETURN VARCHAR2;
+
+/* Transfer contents from pipe to other repository. */
+
+   PROCEDURE dump2screen (hdr IN VARCHAR2 := NULL, wait IN INTEGER
+            := 0);
+
+   PROCEDURE listen2screen (
+      pause    IN   INTEGER := 10,                      -- 10 seconds
+      runfor   IN   INTEGER := 60,                      -- 60 seconds
+      wait     IN   INTEGER := 0
+   );
+
+   PROCEDURE dump2file (separate_on IN VARCHAR2 := CHR (10));
+
+   PROCEDURE dump2memory (separate_on IN VARCHAR2 := CHR (10));
+END;
+/
+--STOREIN:pe_book.pkgbodyext
+CREATE OR REPLACE PACKAGE BODY pe_book
+-- Wrapper around pipe based on book 
+IS
+/* Data structures */
+
+   g_name          VARCHAR2 (200)  := c_name;
+
+   /* Send and Receive Status */
+   g_sendwait      INTEGER         := sendwait;
+   g_receivewait   INTEGER         := receivewait;
+   g_status        INTEGER;
+   g_action        VARCHAR2 (2000);
+
+   FUNCTION defname
+      RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN g_name;
+   END;
+
+   PROCEDURE setdefname (name IN VARCHAR2)
+   IS
+   BEGIN
+      g_name := NVL (name, c_name);
+   END;
+
+/* Overloadings of send */
+
+   PROCEDURE send (
+      isbn_in             IN   book.isbn%TYPE DEFAULT NULL,
+      title_in            IN   book.title%TYPE DEFAULT NULL,
+      summary_in          IN   book.summary%TYPE DEFAULT NULL,
+      author_in           IN   book.author%TYPE DEFAULT NULL,
+      date_published_in   IN   book.date_published%TYPE DEFAULT NULL,
+      page_count_in       IN   book.page_count%TYPE DEFAULT NULL,
+      wait                IN   INTEGER := 0
+   )
+   IS
+   BEGIN
+      -- Clear the buffer before writing. 
+      DBMS_PIPE.reset_buffer;
+      
+      -- For each column, pack item into buffer. 
+      DBMS_PIPE.pack_message (isbn_in);
+      DBMS_PIPE.pack_message (title_in);
+      DBMS_PIPE.pack_message (summary_in);
+      DBMS_PIPE.pack_message (author_in);
+      DBMS_PIPE.pack_message (date_published_in);
+      DBMS_PIPE.pack_message (page_count_in);
+      
+      -- Send the message 
+      g_status :=
+          DBMS_PIPE.send_message (defname, NVL (wait, g_sendwait));
+      g_action := 'SEND_MESSAGE';
+   EXCEPTION
+      WHEN OTHERS
+      THEN
+         DBMS_PIPE.reset_buffer;
+         RAISE;
+   END;
+
+   PROCEDURE send (rec_in IN book%ROWTYPE, wait IN INTEGER := 0)
+   IS
+   BEGIN
+      pe_book.send (rec_in.isbn,
+         rec_in.title,
+         rec_in.summary,
+         rec_in.author,
+         rec_in.date_published,
+         rec_in.page_count,
+         wait
+      );
+   END;
+
+/* Overloadings of receive */
+
+   PROCEDURE receive (
+      isbn_out             OUT      book.isbn%TYPE,
+      title_out            OUT      book.title%TYPE,
+      summary_out          OUT      book.summary%TYPE,
+      author_out           OUT      book.author%TYPE,
+      date_published_out   OUT      book.date_published%TYPE,
+      page_count_out       OUT      book.page_count%TYPE,
+      wait                         IN       INTEGER := 0
+   )
+   IS
+   BEGIN
+      -- Receive next message and unpack for each column. 
+      g_status := DBMS_PIPE.receive_message (defname, wait);
+
+      IF g_status = 0
+      THEN
+         DBMS_PIPE.unpack_message (isbn_out);
+         DBMS_PIPE.unpack_message (title_out);
+         DBMS_PIPE.unpack_message (summary_out);
+         DBMS_PIPE.unpack_message (author_out);
+         DBMS_PIPE.unpack_message (date_published_out);
+         DBMS_PIPE.unpack_message (page_count_out);
+      END IF;
+
+      g_action := 'RECEIVE_MESSAGE';
+   END;
+
+   PROCEDURE receive (
+      rec_out   OUT      book%ROWTYPE,
+      wait              IN       INTEGER := 0
+   )
+   IS
+   BEGIN
+      pe_book.receive (rec_out.isbn,
+         rec_out.title,
+         rec_out.summary,
+         rec_out.author,
+         rec_out.date_published,
+         rec_out.page_count,
+         wait
+      );
+   END;
+
+/* Returns Nth status and action */
+
+   FUNCTION status (pos IN INTEGER := 0)
+      RETURN INTEGER
+   IS
+   BEGIN
+      RETURN g_status;
+   END;
+
+   FUNCTION action (pos IN INTEGER := 0)
+      RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN g_action;
+   END;
+
+/* Transfer contents from pipe to other repository. */
+
+   PROCEDURE dump2screen (hdr IN VARCHAR2 := NULL, wait IN INTEGER := 0)
+   IS
+      v_msgcount   PLS_INTEGER  := 1;
+      rec          book%ROWTYPE;
+   BEGIN
+      DBMS_OUTPUT.enable (1000000);
+
+      IF hdr IS NOT NULL
+      THEN
+         DBMS_OUTPUT.put_line (hdr);
+      END IF;
+
+      -- Read pipe until empty, display each message. 
+      LOOP
+         pe_book.receive (rec, 0/* no waiting allowed */);
+         EXIT WHEN pe_book.status != 0;
+
+         IF v_msgcount > 1
+         THEN
+            DBMS_OUTPUT.put_line ('----------');
+         END IF;
+
+         DBMS_OUTPUT.put_line ('Message ' || v_msgcount);
+         DBMS_OUTPUT.put_line (' isbn=' || rec.isbn);
+         DBMS_OUTPUT.put_line (' title=' || rec.title);
+         DBMS_OUTPUT.put_line (' summary=' || rec.summary);
+         DBMS_OUTPUT.put_line (' author=' || rec.author);
+         DBMS_OUTPUT.put_line (' date_published=' ||
+                                  TO_CHAR (rec.date_published,
+                                     'MM/DD/YYYY HH24:MI:SS'
+                                  )
+         );
+         DBMS_OUTPUT.put_line (' page_count=' || rec.page_count);
+         v_msgcount := v_msgcount + 1;
+      END LOOP;
+   END;
+
+   PROCEDURE listen2screen (
+      pause    IN   INTEGER := 10,                  -- 10 seconds */
+      runfor   IN   INTEGER := 60,                  -- 60 seconds */
+      wait     IN   INTEGER := 0
+   )
+   IS
+      v_start       PLS_INTEGER := DBMS_UTILITY.get_time;
+      v_dumpstart   PLS_INTEGER;
+   BEGIN
+      /* Problem is: you still don't see it till all done... */
+      LOOP
+         EXIT WHEN (DBMS_UTILITY.get_time - v_start) > runfor * 100;
+         v_dumpstart := DBMS_UTILITY.get_time;
+         dump2screen (wait);
+         DBMS_LOCK.sleep (pause -
+                             (DBMS_UTILITY.get_time - v_dumpstart)
+         );
+      END LOOP;
+   END;
+END;
+/

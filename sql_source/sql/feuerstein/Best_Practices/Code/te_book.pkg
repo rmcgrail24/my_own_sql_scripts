@@ -1,0 +1,98 @@
+CREATE OR REPLACE PACKAGE te_book
+IS
+   TYPE book_tt IS TABLE OF book%ROWTYPE;
+
+   PROCEDURE ins (
+      isbn_in IN book.isbn%TYPE,
+      title_in IN book.title%TYPE DEFAULT NULL,
+      summary_in IN book.summary%TYPE DEFAULT NULL,
+      author_in IN book.author%TYPE DEFAULT NULL,
+      date_published_in IN book.date_published%TYPE DEFAULT NULL,
+      page_count_in IN book.page_count%TYPE DEFAULT NULL);
+
+   --// Record-based insert //--
+   PROCEDURE ins (rec_in IN book%ROWTYPE);
+
+   --// Collection-based insert //--
+   PROCEDURE ins (coll_in IN book_tt);
+END te_book;
+/
+CREATE OR REPLACE PACKAGE BODY te_book
+IS
+   PROCEDURE ins$ins (
+      isbn_in IN book.isbn%TYPE,
+      title_in IN book.title%TYPE DEFAULT NULL,
+      summary_in IN book.summary%TYPE DEFAULT NULL,
+      author_in IN book.author%TYPE DEFAULT NULL,
+      date_published_in IN book.date_published%TYPE DEFAULT NULL,
+      page_count_in IN book.page_count%TYPE DEFAULT NULL
+   )
+   IS
+   BEGIN
+      INSERT INTO book
+                  (
+                     isbn,
+                     title,
+                     summary,
+                     author,
+                     date_published,
+                     page_count
+                  )
+           VALUES (
+              isbn_in,
+              title_in,
+              summary_in,
+              author_in,
+              date_published_in,
+              page_count_in
+           );
+   EXCEPTION
+      WHEN OTHERS
+      THEN
+         err.LOG;
+   END ins$ins;
+
+   PROCEDURE ins (
+      isbn_in IN book.isbn%TYPE,
+      title_in IN book.title%TYPE DEFAULT NULL,
+      summary_in IN book.summary%TYPE DEFAULT NULL,
+      author_in IN book.author%TYPE DEFAULT NULL,
+      date_published_in IN book.date_published%TYPE DEFAULT NULL,
+      page_count_in IN book.page_count%TYPE DEFAULT NULL
+   )
+   IS
+   BEGIN
+      ins$ins (isbn_in,
+         title_in,
+         summary_in,
+         author_in,
+         date_published_in,
+         page_count_in
+      );
+   END;
+
+   PROCEDURE ins (rec_in IN book%ROWTYPE)
+   IS
+   BEGIN
+      ins$ins (rec_in.isbn,
+         rec_in.title,
+         rec_in.summary,
+         rec_in.author,
+         rec_in.date_published,
+         rec_in.page_count
+      );
+   END;
+
+   PROCEDURE ins (coll_in IN book_tt)
+   IS
+      indx PLS_INTEGER := coll_in.FIRST;
+   BEGIN
+      LOOP
+         EXIT WHEN indx IS NULL;
+         ins (coll_in (indx));
+         indx := coll_in.NEXT (indx);
+      END LOOP;
+   END;
+END te_book;
+/
+

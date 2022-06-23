@@ -1,0 +1,28 @@
+SQL> @shared_pool_summary
+
+KSMCHCOM             CHUNKS       RECR    FREEABL      TOTAL                    
+---------------- ---------- ---------- ---------- ----------                    
+KGFF heap                 6       1296       2528       3824                    
+KGK contexts              2                  2400       2400                    
+KGK heap                  2       1136                  1136                    
+KGL handles             571     178616                178616                    
+KQLS heap               404      87952     524888     612840                    
+PL/SQL DIANA            274      42168     459504     501672                    
+PL/SQL MPCODE            57      14560      88384     102944                    
+PLS cca hp desc           1                   168        168                    
+PLS non-lib hp            1       2104                  2104                    
+character set m           5                 23504      23504                    
+dictionary cach         108                223872     223872 
+fixed allocatio           9        360                   360                    
+free memory             185                           614088                    
+kzull                     1                    48         48                    
+library cache          1612     268312     356312     624624                    
+multiblock rea            1                  2072       2072                    
+permanent memor           1                          1677104                    
+reserved stoppe           2                               48                    
+row cache lru            24       1168                  1168                    
+session param v           8                 23488      23488                    
+sql area                983     231080    1303792    1534872                    
+table columns            19      18520                 18520                    
+table definiti            2        176                   176                    
+

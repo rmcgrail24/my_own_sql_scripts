@@ -1,0 +1,39 @@
+SQL> @latch_gets
+
+LATCH TYPE                            SIMPLE GETS      SPIN GETS     SLEEP GETS 
+------------------------------ ------------------ -------------- -------------- 
+NLS data objects                        1 100.00%       0  0.00%       0  0.00% 
+archive control                       228 100.00%       0  0.00%       0  0.00% 
+cache buffer handles                67399 100.00%       0  0.00%       0  0.00% 
+cache buffers chains           2948282897 100.00%   11811  0.00%   35999  0.00% 
+cache buffers lru chain          56863812  99.60%   44364  0.08%  182480  0.32% 
+dml lock allocation               2047579  99.99%      36  0.00%     199  0.01% 
+enqueue hash chains              14960087  99.95%    1139  0.01%    6603  0.04% 
+enqueues                         24759299 100.00%     165  0.00%     861  0.00% 
+global transaction               32782248 100.00%       0  0.00%       0  0.00% 
+global tx free list                 87604 100.00%       0  0.00%       0  0.00% 
+global tx hash mapping            4728751 100.00%      36  0.00%     184  0.00% 
+ktm global data                       691 100.00%       0  0.00%       0  0.00% 
+latch wait list                     89114  99.86%      27  0.03%      95  0.11% 
+library cache                    79753368  99.92%   18995  0.02%   43535  0.05% 
+library cache load lock             14617  99.99%       0  0.00%       1  0.01% 
+list of block allocation          3374382  99.99%      47  0.00%     353  0.01% 
+loader state object freelist          466 100.00%       0  0.00%       0  0.00% 
+messages                         58834525  99.98%    3968  0.01%    8315  0.01% 
+modify parameter values              8099  99.96%       1  0.01%       2  0.02% 
+multiblock read objects            977502 100.00%       2  0.00%       6  0.00% 
+process allocation                   7266 100.00%       0  0.00%       0  0.00% 
+redo allocation                 145994728  99.93%   29218  0.02%   66781  0.05% 
+redo copy                             832   4.23%     606  3.08%   18245 92.69% 
+row cache objects                 6847179 100.00%      89  0.00%      76  0.00% 
+sequence cache                     115269 100.00%       0  0.00%       0  0.00% 
+session allocation                1425524  99.99%      13  0.00%      78  0.01% 
+session idle bit                 27555463  99.99%     256  0.00%    1198  0.00% 
+session switching                    3329 100.00%       0  0.00%       0  0.00% 
+shared pool                       1748934  99.97%     272  0.02%     295  0.02% 
+sort extent pool                      691 100.00%       0  0.00%       0  0.00% 
+system commit number            132026967  99.99%    2312  0.00%    5548  0.00% 
+transaction allocation            3650143  99.98%      80  0.00%     535  0.01% 
+undo global data                 17310031  99.99%     252  0.00%    1327  0.01% 
+user lock                           19487 100.00%       0  0.00%       0  0.00% 
+SQL> 

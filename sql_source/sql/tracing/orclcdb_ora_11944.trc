@@ -1,0 +1,157 @@
+Trace file D:\APP\DBA12CR1\diag\rdbms\orclcdb\orclcdb\trace\orclcdb_ora_11944.trc
+Oracle Database 12c Enterprise Edition Release 12.1.0.1.0 - 64bit Production
+With the Partitioning, OLAP, Advanced Analytics and Real Application Testing options
+Windows NT Version V6.1 Service Pack 1 
+CPU                 : 4 - type 8664, 2 Physical Cores
+Process Affinity    : 0x0x0000000000000000
+Memory (Avail/Total): Ph:3088M/7970M, Ph+PgF:10142M/15938M 
+Instance name: orclcdb
+Redo thread mounted by this instance: 1
+Oracle process number: 22
+Windows thread id: 11944, image: ORACLE.EXE (SHAD)
+
+
+*** 2017-06-10 11:33:14.225
+*** SESSION ID:(242.3) 2017-06-10 11:33:14.225
+*** CLIENT ID:() 2017-06-10 11:33:14.225
+*** SERVICE NAME:(SYS$USERS) 2017-06-10 11:33:14.225
+*** MODULE NAME:(sqlplus.exe) 2017-06-10 11:33:14.225
+*** ACTION NAME:() 2017-06-10 11:33:14.225
+*** CONTAINER ID:(1) 2017-06-10 11:33:14.225
+ 
+Count of ofsmtab$: 0 entries
+
+*** 2017-06-10 11:33:19.528
+ 06/10/2017 11:33:15 06/10/2017 11:33:162017-06-10 11:33:19.528: [  OCRMSG]prom_waitconnect: CONN NOT ESTABLISHED (0,29,1,2)
+2017-06-10 11:33:19.528: [  OCRMSG]GIPC error [29] msg [gipcretConnectionRefused]
+2017-06-10 11:33:19.528: [  OCRMSG]prom_connect: error while waiting for connection complete [24]
+2017-06-10 11:33:19.528: [ default]ut_read_reg:2:ocr registry key SOFTWARE\Oracle\olr cannot be opened. error 2
+
+*** 2017-06-10 11:33:21.530
+2017-06-10 11:33:21.530: [  OCRMSG]prom_waitconnect: CONN NOT ESTABLISHED (0,29,1,2)
+2017-06-10 11:33:21.530: [  OCRMSG]GIPC error [29] msg [gipcretConnectionRefused]
+2017-06-10 11:33:21.530: [  OCRMSG]prom_connect: error while waiting for connection complete [24]
+2017-06-10 11:33:21.530: [ default]ut_read_reg:2:ocr registry key SOFTWARE\Oracle\olr cannot be opened. error 2
+
+*** 2017-06-10 11:33:23.561
+2017-06-10 11:33:23.561: [  OCRMSG]prom_waitconnect: CONN NOT ESTABLISHED (0,29,1,2)
+2017-06-10 11:33:23.561: [  OCRMSG]GIPC error [29] msg [gipcretConnectionRefused]
+2017-06-10 11:33:23.561: [  OCRMSG]prom_connect: error while waiting for connection complete [24]
+2017-06-10 11:33:23.561: [ default]ut_read_reg:2:ocr registry key SOFTWARE\Oracle\olr cannot be opened. error 2
+
+*** 2017-06-10 11:33:25.564
+2017-06-10 11:33:25.564: [  OCRMSG]prom_waitconnect: CONN NOT ESTABLISHED (0,29,1,2)
+2017-06-10 11:33:25.564: [  OCRMSG]GIPC error [29] msg [gipcretConnectionRefused]
+2017-06-10 11:33:25.564: [  OCRMSG]prom_connect: error while waiting for connection complete [24]
+2017-06-10 11:33:25.564: [ default]ut_read_reg:2:ocr registry key SOFTWARE\Oracle\olr cannot be opened. error 2
+
+*** 2017-06-10 11:33:27.749
+kskpdbnfy: open pdb 2 state 0
+
+*** 2017-06-10 11:33:38.358
+ 06/10/2017 11:33:373F486E6736EF48D5A837D7777307A723
+
+*** 2017-06-10 11:33:39.358
+Param= 16, AT=4
+KZAM_FILE_MAX_SIZE for 4 is 10000
+Param= 16, AT=8
+KZAM_FILE_MAX_SIZE for 8 is 10000
+Param= 16, AT=51
+KZAM_FILE_MAX_SIZE for 51 is 10000
+Param= 17, AT=4
+KZAM_FILE_MAX_AGE for 4 is 5
+Param= 17, AT=8
+KZAM_FILE_MAX_AGE for 8 is 5
+Param= 17, AT=51
+KZAM_FILE_MAX_AGE for 51 is 5
+Param= 22, AT=1
+KZAM_DB_TABLESPACE_LOC for 1 is SYSAUX
+Param= 22, AT=2
+KZAM_DB_TABLESPACE_LOC for 2 is SYSAUX
+Param= 22, AT=51
+KZAM_DB_TABLESPACE_LOC for 51 is SYSAUX
+Param= 23, AT=1
+KZAM_DB_DEL_BATCH_SIZE for 1 is 10000
+Param= 23, AT=2
+KZAM_DB_DEL_BATCH_SIZE for 2 is 10000
+Param= 26, AT=4
+KZAM_FILE_DEL_BATCH_SIZE for 15 is 1000
+Param= 26, AT=8
+KZAM_FILE_DEL_BATCH_SIZE for 15 is 1000
+Param= 33, AT=51
+KZAM KZAM_ANG_WRITE_MODE
+
+*** 2017-06-10 11:34:17.959
+kskpdbnfy: open pdb 3 state 0
+
+*** 2017-06-10 11:34:42.903
+ 06/10/2017 11:34:423F486E6736EF48D5A837D7777307A723
+
+*** 2017-06-10 11:34:44.880
+ 06/10/2017 11:34:42Param= 16, AT=4
+KZAM_FILE_MAX_SIZE for 4 is 10000
+Param= 16, AT=8
+KZAM_FILE_MAX_SIZE for 8 is 10000
+Param= 16, AT=51
+KZAM_FILE_MAX_SIZE for 51 is 10000
+Param= 17, AT=4
+KZAM_FILE_MAX_AGE for 4 is 5
+Param= 17, AT=8
+KZAM_FILE_MAX_AGE for 8 is 5
+Param= 17, AT=51
+KZAM_FILE_MAX_AGE for 51 is 5
+Param= 22, AT=1
+KZAM_DB_TABLESPACE_LOC for 1 is SYSAUX
+Param= 22, AT=2
+KZAM_DB_TABLESPACE_LOC for 2 is SYSAUX
+Param= 22, AT=51
+KZAM_DB_TABLESPACE_LOC for 51 is SYSAUX
+Param= 23, AT=1
+KZAM_DB_DEL_BATCH_SIZE for 1 is 10000
+Param= 23, AT=2
+KZAM_DB_DEL_BATCH_SIZE for 2 is 10000
+Param= 26, AT=4
+KZAM_FILE_DEL_BATCH_SIZE for 15 is 1000
+Param= 26, AT=8
+KZAM_FILE_DEL_BATCH_SIZE for 15 is 1000
+Param= 33, AT=51
+KZAM KZAM_ANG_WRITE_MODE
+Trace file D:\APP\DBA12CR1\diag\rdbms\orclcdb\orclcdb\trace\orclcdb_ora_11944.trc
+Oracle Database 12c Enterprise Edition Release 12.1.0.1.0 - 64bit Production
+With the Partitioning, OLAP, Advanced Analytics and Real Application Testing options
+Windows NT Version V6.1 Service Pack 1 
+CPU                 : 4 - type 8664, 2 Physical Cores
+Process Affinity    : 0x0x0000000000000000
+Memory (Avail/Total): Ph:1098M/7970M, Ph+PgF:7589M/15938M 
+Instance name: orclcdb
+Redo thread mounted by this instance: 1
+Oracle process number: 22
+Windows thread id: 11944, image: ORACLE.EXE (SHAD)
+
+
+*** 2017-09-24 22:06:39.766
+*** SESSION ID:(242.9) 2017-09-24 22:06:39.766
+*** CLIENT ID:() 2017-09-24 22:06:39.766
+*** SERVICE NAME:(orclpdb1) 2017-09-24 22:06:39.766
+*** MODULE NAME:(SQL*Plus) 2017-09-24 22:06:39.766
+*** ACTION NAME:() 2017-09-24 22:06:39.766
+*** CONTAINER ID:(3) 2017-09-24 22:06:39.766
+ 
+=====================
+PARSING IN CURSOR #606516888 len=78 dep=0 uid=185 oct=47 lid=185 tim=56520380753 hv=408776978 ad='7ff52b7c390' sqlid='3s0ma5cc5uw8k'
+BEGIN dbms_session.session_trace_enable(waits => true, binds => false); END;
+END OF STMT
+EXEC #606516888:c=0,e=708,p=0,cr=0,cu=0,mis=0,r=1,dep=0,og=1,plh=0,tim=56520380752
+WAIT #606516888: nam='SQL*Net message to client' ela= 5 driver id=1413697536 #bytes=1 p3=0 obj#=-1 tim=56520398107
+
+*** 2017-09-24 22:07:04.010
+WAIT #606516888: nam='SQL*Net message from client' ela= 24243970 driver id=1413697536 #bytes=1 p3=0 obj#=-1 tim=56544642114
+CLOSE #606516888:c=0,e=27,dep=0,type=0,tim=56544642343
+=====================
+PARSING IN CURSOR #606517792 len=50 dep=0 uid=185 oct=42 lid=185 tim=56544642442 hv=3574122130 ad='0' sqlid='cug1yvrahjjnk'
+alter session set tracefile_identifier = 'Russell'
+END OF STMT
+PARSE #606517792:c=0,e=23,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=0,plh=0,tim=56544642442
+
+*** TRACE CONTINUES IN FILE D:\APP\DBA12CR1\diag\rdbms\orclcdb\orclcdb\trace\orclcdb_ora_11944_Russell.trc ***
+

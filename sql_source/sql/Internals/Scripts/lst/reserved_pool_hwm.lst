@@ -1,0 +1,6 @@
+SQL> @reserved_pool_hwm
+
+RESERVED_SIZE HIGH_WATER_MARK   USAGE                                           
+------------- --------------- -------                                           
+       256000           15080      6%                                           
+

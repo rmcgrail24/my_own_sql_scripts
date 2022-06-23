@@ -1,0 +1,26 @@
+SQL> @latch_spins
+
+LATCH TYPE                      SPIN GETS SLEEP GETS SPIN HIT RATE              
+------------------------------ ---------- ---------- -------------              
+cache buffers lru chain             44752     182595        19.68%              
+redo allocation                     29218      66781        30.44%              
+library cache                       18997      43535        30.38%              
+cache buffers chains                11812      36001        24.70%              
+redo copy                             606      18245         3.21%              
+messages                             3968       8315        32.30%              
+enqueue hash chains                  1139       6603        14.71%              
+system commit number                 2312       5548        29.41%              
+undo global data                      252       1327        15.96%              
+session idle bit                      256       1198        17.61%              
+enqueues                              165        861        16.08%              
+transaction allocation                 80        535        13.01%              
+list of block allocation               47        353        11.75%              
+shared pool                           272        295        47.97%              
+dml lock allocation                    36        199        15.32%              
+global tx hash mapping                 36        184        16.36%              
+latch wait list                        27         95        22.13%              
+session allocation                     13         78        14.29%              
+row cache objects                      89         76        53.94%              
+
+ALL LATCHES                        114080     372833        23.43%              
+

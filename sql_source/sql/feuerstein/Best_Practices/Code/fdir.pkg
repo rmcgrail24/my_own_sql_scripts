@@ -1,0 +1,76 @@
+CREATE TABLE dir
+(phase integer,
+ app varchar2(100),
+ name varchar2(100));
+
+CREATE OR REPLACE PACKAGE fdir
+IS
+   c_prod   CONSTANT PLS_INTEGER := 1;
+   c_qa     CONSTANT PLS_INTEGER := 2;
+   c_test   CONSTANT PLS_INTEGER := 3;
+   c_dev    CONSTANT PLS_INTEGER := 4;
+
+   PROCEDURE setphase (phase_in IN PLS_INTEGER);
+
+   FUNCTION name (app_in IN dir.app%TYPE)
+      RETURN dir.name%TYPE;
+
+   FUNCTION fopen (
+      app_in    IN   dir.app%TYPE,
+      file_in   IN   VARCHAR2,
+      mode_in   IN   VARCHAR2 := 'R'
+   )
+      RETURN UTL_FILE.file_type;
+END fdir;
+/
+
+CREATE OR REPLACE PACKAGE BODY fdir
+IS
+   g_phase   dir.phase%TYPE := c_prod;
+
+   PROCEDURE setphase (phase_in IN PLS_INTEGER)
+   IS
+   BEGIN
+      g_phase := phase_in;
+   END setphase;
+
+   FUNCTION name (app_in IN dir.app%TYPE)
+      RETURN dir.name%TYPE
+   IS
+      retval   dir.name%TYPE;
+   BEGIN
+      SELECT name
+        INTO retval
+        FROM dir
+       WHERE phase = g_phase
+         AND app = name.app_in;
+      RETURN retval;
+   EXCEPTION
+      WHEN NO_DATA_FOUND
+      THEN
+         RETURN NULL;
+   END name;
+
+   FUNCTION fopen (
+      app_in    IN   dir.app%TYPE,
+      file_in   IN   VARCHAR2,
+      mode_in   IN   VARCHAR2 := 'R'
+   )
+      RETURN UTL_FILE.file_type
+   IS
+      retval   UTL_FILE.file_type;
+      l_name   dir.name%TYPE;
+   BEGIN
+      l_name := fdir.name (app_in);
+
+      IF l_name IS NOT NULL
+      THEN
+         retval := UTL_FILE.fopen (l_name, file_in, mode_in);
+      END IF;
+
+      RETURN retval;
+   END fopen;
+END fdir;
+/
+
+

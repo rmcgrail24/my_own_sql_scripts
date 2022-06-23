@@ -1,0 +1,11 @@
+select trunc(1601.916718, 1) from dual
+/
+select trunc(1601.916718, 2) from dual
+/
+select trunc(1601.916718,-3) from dual
+/
+select trunc(1601.916718) from dual
+/
+select job_id, salary, salary * 1.13123, trunc(salary * 1.13123) "Proposed Salary Increment"
+from employees
+where job_id like 'FI%';

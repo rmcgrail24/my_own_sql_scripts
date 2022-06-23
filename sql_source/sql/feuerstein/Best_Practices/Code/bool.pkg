@@ -1,0 +1,109 @@
+CREATE OR REPLACE PACKAGE bool
+IS
+   -- This is a simple prototype of a package to provide
+   -- consistent translations between Booleans and both
+   -- strings and numbers. You can change these
+   -- translation values as you wish or, even better,
+   -- build "get and set" programs to allow a user of
+   -- the package to set them to whatever they want
+   -- whenever they want to.
+   
+   c_tval      CONSTANT CHAR (4) := 'TRUE';
+   c_fval      CONSTANT CHAR (5) := 'FALSE';
+   c_nval      CONSTANT CHAR (4) := 'NULL';
+   c_tvalnum   CONSTANT INTEGER  := 1;
+   c_fvalnum   CONSTANT INTEGER  := 0;
+
+/* Conversion Functions */
+
+   FUNCTION TO_CHAR (val IN BOOLEAN)
+      RETURN VARCHAR2;
+
+   FUNCTION TO_NUMBER (val IN BOOLEAN)
+      RETURN PLS_INTEGER;
+
+   FUNCTION to_bool (val IN VARCHAR2)
+      RETURN BOOLEAN;
+
+   FUNCTION to_bool (val IN NUMBER)
+      RETURN BOOLEAN;
+END bool;
+/
+CREATE OR REPLACE PACKAGE BODY bool
+IS
+   FUNCTION TO_CHAR (val IN BOOLEAN)
+      RETURN VARCHAR2
+   IS
+      retval   VARCHAR2 (100);
+   BEGIN
+      IF val
+      THEN
+         retval := c_tval;
+      ELSIF NOT val
+      THEN
+         retval := c_fval;
+      ELSIF val IS NULL
+      THEN
+         retval := c_nval;
+      END IF;
+
+      RETURN retval;
+   END to_char;
+
+   FUNCTION TO_NUMBER (val IN BOOLEAN)
+      RETURN PLS_INTEGER
+   IS
+      retval   PLS_INTEGER;
+   BEGIN
+      IF val
+      THEN
+         retval := c_tvalnum;
+      ELSIF NOT val
+      THEN
+         retval := c_fvalnum;
+      ELSIF val IS NULL
+      THEN
+         retval := NULL;
+      END IF;
+
+      RETURN retval;
+   END to_number;
+
+   FUNCTION to_bool (val IN VARCHAR2)
+      RETURN BOOLEAN
+   IS
+      retval BOOLEAN;
+   BEGIN
+      IF UPPER (val) IN ('Y', 'YES', 'T', 'TRUE')
+      THEN
+         retval := TRUE;
+      ELSIF UPPER (val) IN ('N', 'NO', 'F', 'FALSE')
+      THEN
+         retval := FALSE;
+      ELSE
+         retval := NULL;
+      END IF;
+
+      RETURN retval;
+   END to_bool;
+
+   FUNCTION to_bool (val IN NUMBER)
+      RETURN BOOLEAN
+   IS
+      retval BOOLEAN;
+   BEGIN
+      IF UPPER (val) IN (1)
+      THEN
+         retval := TRUE;
+      ELSIF UPPER (val) IN (0)
+      THEN
+         retval := FALSE;
+      ELSE
+         retval := NULL;
+      END IF;
+
+      RETURN retval;
+   END to_bool;
+END bool;
+/
+

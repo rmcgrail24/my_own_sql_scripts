@@ -1,0 +1,53 @@
+;;; 
+Export: Release 11.1.0.6.0 - Production on Saturday, 11 September, 2010 19:13:28
+
+Copyright (c) 2003, 2007, Oracle.  All rights reserved.
+;;; 
+Connected to: Oracle Database 11g Enterprise Edition Release 11.1.0.6.0 - Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+Starting "HR"."HR_EXPORT":  hr/******** SCHEMAS=hr DIRECTORY=export_dumps DUMPFILE=schemas%U.dmp LOGFILE=hr_export.log JOB_NAME=hr_export 
+Estimate in progress using BLOCKS method...
+Processing object type SCHEMA_EXPORT/TABLE/TABLE_DATA
+Total estimation using BLOCKS method: 12.5 MB
+Processing object type SCHEMA_EXPORT/PRE_SCHEMA/PROCACT_SCHEMA
+Processing object type SCHEMA_EXPORT/SEQUENCE/SEQUENCE
+Processing object type SCHEMA_EXPORT/TABLE/TABLE
+Processing object type SCHEMA_EXPORT/TABLE/GRANT/OWNER_GRANT/OBJECT_GRANT
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/INDEX
+Processing object type SCHEMA_EXPORT/TABLE/CONSTRAINT/CONSTRAINT
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/STATISTICS/INDEX_STATISTICS
+Processing object type SCHEMA_EXPORT/TABLE/COMMENT
+Processing object type SCHEMA_EXPORT/PROCEDURE/PROCEDURE
+Processing object type SCHEMA_EXPORT/PROCEDURE/ALTER_PROCEDURE
+Processing object type SCHEMA_EXPORT/VIEW/VIEW
+Processing object type SCHEMA_EXPORT/TABLE/CONSTRAINT/REF_CONSTRAINT
+Processing object type SCHEMA_EXPORT/TABLE/TRIGGER
+Processing object type SCHEMA_EXPORT/TABLE/STATISTICS/TABLE_STATISTICS
+Processing object type SCHEMA_EXPORT/POST_SCHEMA/PROCACT_SCHEMA
+. . exported "HR"."WAR_AND_PEACE"                        3.611 MB   67050 rows
+. . exported "HR"."PICKWICK_PAPERS"                      2.000 MB   39042 rows
+. . exported "HR"."GREAT_EXPECTATIONS"                   1.133 MB   20409 rows
+. . exported "HR"."HAMLET"                               220.3 KB    5302 rows
+. . exported "HR"."GOSPEL_OF_MATTHEW"                    144.8 KB    2406 rows
+. . exported "HR"."JULIUS_CAESAR"                        160.2 KB    3904 rows
+. . exported "HR"."KING_LEAR"                            190.5 KB    4669 rows
+. . exported "HR"."MACBETH"                              146.7 KB    3667 rows
+. . exported "HR"."ROMEO_AND_JULIET"                     186.7 KB    4334 rows
+. . exported "HR"."GOSPEL_OF_JOHN"                       124.2 KB    1880 rows
+. . exported "HR"."BIG_ORDERS"                             5.5 KB       2 rows
+. . exported "HR"."COUNTRIES"                            6.375 KB      25 rows
+. . exported "HR"."DEPARTMENTS"                          7.015 KB      27 rows
+. . exported "HR"."EMPLOYEES"                            16.80 KB     107 rows
+. . exported "HR"."EMPLOYEES_TEMP"                       7.289 KB     107 rows
+. . exported "HR"."EMP_NAME"                             7.781 KB     106 rows
+. . exported "HR"."JOBS"                                 6.984 KB      19 rows
+. . exported "HR"."JOB_HISTORY"                          7.054 KB      10 rows
+. . exported "HR"."LOCATIONS"                            8.273 KB      23 rows
+. . exported "HR"."REGIONS"                              5.484 KB       4 rows
+. . exported "HR"."REJECTED_ORDERS"                      5.492 KB       2 rows
+. . exported "HR"."VALID_ORDERS"                         5.515 KB       3 rows
+Master table "HR"."HR_EXPORT" successfully loaded/unloaded
+******************************************************************************
+Dump file set for HR.HR_EXPORT is:
+  /home/russ/sql/datapump/file_data/schemas01.dmp
+Job "HR"."HR_EXPORT" successfully completed at 19:14:00

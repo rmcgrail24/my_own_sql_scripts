@@ -1,0 +1,4 @@
+userid=russ/russ
+control='/home/russ/sql/sql_loader/ctl/gospel_of_john'
+log='/home/russ/sql/sql_loader/log/gospel_of_john'
+errors=2000

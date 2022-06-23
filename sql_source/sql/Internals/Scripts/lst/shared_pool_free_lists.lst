@@ -1,0 +1,9 @@
+SQL> @shared_pool_free_lists
+
+    BUCKET FREE_SPACE FREE_CHUNKS AVERAGE_SIZE    BIGGEST
+---------- ---------- ----------- ------------ ----------
+         0     166344        3872           42         72
+         1      32208         374           86         96
+         4        928           1          928        928
+         6      11784           4         2946       3328 
+

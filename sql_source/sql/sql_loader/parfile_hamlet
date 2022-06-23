@@ -1,0 +1,4 @@
+userid=hr/hr
+control='/home/russ/sql/sql_loader/ctl/hamlet'
+log='/home/russ/sql/sql_loader/log/hamlet'
+errors=2000

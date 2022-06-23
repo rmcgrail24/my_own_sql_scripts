@@ -1,0 +1,19 @@
+SQL> @tune_spin_count
+
+SPIN_COUNT                                                                      
+----------                                                                      
+2000                                                                            
+
+SPIN HIT RATE  SPIN COST                                                        
+------------- ----------                                                        
+       93.53%          6                                                        
+
+Enter new _spin_count value to try: 4000
+Enter time to wait (in seconds): 900
+
+SPIN HIT RATE  SPIN COST                                                        
+------------- ----------                                                        
+       96.27%          4                                                        
+
+SQL> 
+

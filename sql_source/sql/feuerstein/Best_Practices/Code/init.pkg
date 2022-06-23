@@ -1,0 +1,86 @@
+DROP TABLE user_config;
+
+CREATE TABLE user_config (
+   username VARCHAR2(30),
+   printer VARCHAR2(100),
+   show_lov CHAR(1),
+   show_toolbar CHAR(1)
+   );
+
+INSERT INTO user_config VALUES (
+   '*DEFAULT*', 'lpt1', 'Y', 'Y');
+
+INSERT INTO user_config
+   SELECT username, 'lpt1', 'Y', 'Y'
+     FROM all_users
+    WHERE username NOT IN ('SYS', 'SYSTEM');
+
+UPDATE user_config
+   SET printer = 'lpt26',
+	   show_lov = 'N',
+	   show_toolbar = 'N'
+ WHERE username = 'SCOTT';
+
+CREATE OR REPLACE PACKAGE sessinit
+IS
+   FUNCTION show_lov RETURN VARCHAR2;
+
+   FUNCTION show_toolbar RETURN VARCHAR2;
+
+   FUNCTION printer RETURN VARCHAR2;
+END sessinit;
+/
+CREATE OR REPLACE PACKAGE BODY sessinit
+IS
+   c_default CONSTANT CHAR(9) := '*DEFAULT*';
+
+   /* Don't use variables; use a record!
+   g_show_lov user_config.show_lov%TYPE;
+   g_show_toolbar user_config.show_toolbar%TYPE;
+   g_printer user_config.printer%TYPE;
+   */
+
+   g_user user_config%ROWTYPE;
+
+   CURSOR user_cur (nm IN VARCHAR2)
+   IS
+      SELECT *
+        FROM user_config
+        WHERE username = nm;
+   
+   FUNCTION show_lov RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN g_user.show_lov;
+   END;
+
+   FUNCTION show_toolbar RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN g_user.show_toolbar;
+   END;
+
+   FUNCTION printer RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN g_user.printer;
+   END;
+
+/* Initialize Globals */
+BEGIN
+   /* Get user preferences for this user. */
+   OPEN user_cur (USER);
+   FETCH user_cur INTO g_user;
+   IF user_cur%NOTFOUND
+   THEN
+      /* Use the defaults. */
+      CLOSE user_cur;
+      OPEN user_cur (c_default);
+      FETCH user_cur INTO g_user;
+   END IF;
+   CLOSE user_cur;
+
+END sessinit;
+/
+
+

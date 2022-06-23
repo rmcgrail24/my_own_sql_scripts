@@ -1,0 +1,24 @@
+SQL> @session_times
+
+Enter SID: 29
+
+EVENT                                                            TIME_WAITED
+---------------------------------------------------------------- -----------
+SQL*Net message from client                                          2954196
+CPU used by this session                                             1657275
+db file sequential read                                               246759
+write complete waits                                                  139698
+buffer busy waits                                                      61832
+log file sync                                                          32601
+enqueue                                                                 9576
+log file switch completion                                              3530
+SQL*Net message to client                                               2214
+db file scattered read                                                  1879
+SQL*Net more data to client                                              952
+SQL*Net more data from client                                            908
+latch free                                                               840
+free buffer waits                                                        100
+buffer deadlock                                                           57
+row cache lock                                                             1
+SQL*Net break/reset to client                                              0 
+

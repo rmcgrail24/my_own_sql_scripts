@@ -1,0 +1,20 @@
+;;; 
+Export: Release 11.1.0.6.0 - Production on Friday, 10 September, 2010 22:30:30
+
+Copyright (c) 2003, 2007, Oracle.  All rights reserved.
+;;; 
+Connected to: Oracle Database 11g Enterprise Edition Release 11.1.0.6.0 - Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+Starting "HR"."LIT_EXPORT":  hr/******** TABLES=war_and_peace DIRECTORY=export_dumps DUMPFILE=lit%U.dmp PARALLEL=2 LOGFILE=literature_export.log JOB_NAME=lit_export 
+Estimate in progress using BLOCKS method...
+Processing object type TABLE_EXPORT/TABLE/TABLE_DATA
+Total estimation using BLOCKS method: 5 MB
+. . exported "HR"."WAR_AND_PEACE"                        3.611 MB   67050 rows
+Processing object type TABLE_EXPORT/TABLE/TABLE
+Processing object type TABLE_EXPORT/TABLE/STATISTICS/TABLE_STATISTICS
+Master table "HR"."LIT_EXPORT" successfully loaded/unloaded
+******************************************************************************
+Dump file set for HR.LIT_EXPORT is:
+  /home/russ/sql/datapump/file_data/lit01.dmp
+  /home/russ/sql/datapump/file_data/lit02.dmp
+Job "HR"."LIT_EXPORT" successfully completed at 22:30:41

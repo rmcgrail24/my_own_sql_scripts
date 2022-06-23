@@ -1,0 +1,4 @@
+userid=russ/russ
+control='/home/russ/sql/sql_loader/ctl/photo_tbl'
+log='/home/russ/sql/sql_loader/log/photo_tbl'
+errors=2000

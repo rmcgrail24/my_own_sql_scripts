@@ -1,0 +1,5 @@
+FILE=expdat.dmp
+GRANTS=y
+FULL=y
+ROWS=y
+LOG=export.log

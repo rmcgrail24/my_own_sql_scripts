@@ -1,0 +1,31 @@
+CREATE OR REPLACE PACKAGE tmr
+IS
+   PROCEDURE capture;
+   PROCEDURE show_elapsed;
+END tmr;
+/
+
+CREATE OR REPLACE PACKAGE BODY tmr
+IS       
+   last_timing NUMBER := NULL;
+
+   PROCEDURE capture  
+   IS
+   BEGIN
+     last_timing := DBMS_UTILITY.GET_TIME;
+   END;
+
+   PROCEDURE show_elapsed 
+   IS
+   BEGIN
+      -- Avoid "epoch time" wrap around (thanks, Solomon Yakobson)
+      -- DBMS_OUTPUT.PUT_LINE
+      --   (DBMS_UTILITY.GET_TIME - last_timing);
+      DBMS_OUTPUT.PUT_LINE (
+         MOD (DBMS_UTILITY.GET_TIME - last_timing + POWER(2,32), 
+              POWER(2,32)));
+  END;
+
+END tmr;
+/
+

@@ -1,0 +1,44 @@
+CREATE OR REPLACE PACKAGE BODY log_pkg
+IS
+   g_version VARCHAR2 (100);
+
+   FUNCTION oraversion
+      RETURN VARCHAR2
+   IS
+      retval VARCHAR2 (100);
+   BEGIN
+      -- Pretend I am on 7.3
+      RETURN '7.3';
+   END;
+
+   PROCEDURE putline (code_in IN INTEGER, text_in IN VARCHAR2)
+   IS
+   BEGIN
+      IF g_version = '8.1'
+      THEN
+         log81_pkg.putline (code_in, text_in);
+      ELSE
+         INSERT INTO logtab
+              VALUES (
+                 code_in,
+                 text_in,
+                 SYSDATE,
+                 USER);
+      END IF;
+   END;
+
+BEGIN
+   g_version := oraversion;
+END log_pkg;
+/
+
+CREATE OR REPLACE PACKAGE BODY log81_pkg
+IS
+   PROCEDURE putline (code_in IN INTEGER, text_in IN VARCHAR2)
+   IS
+      PRAGMA AUTONOMOUS_TRANSACTION;
+   BEGIN
+      -- Introduce compilation error to mimic compile under 7.3
+   END;
+END log81_pkg;
+/

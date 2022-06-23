@@ -1,0 +1,230 @@
+
+SQL*Loader: Release 11.1.0.6.0 - Production on Sat Oct 30 15:16:52 2010
+
+Copyright (c) 1982, 2007, Oracle.  All rights reserved.
+
+Control File:   /home/russ/sql/sql_loader/ctl/all_text_all_tables.ctl
+
+There are 10 data files:
+Data File:      /home/russ/data/text_files/Gutenberg/GospelOfJohn.txt
+  Bad File:     /home/russ/sql/sql_loader/bad/GospelOfJohn.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+Data File:      /home/russ/data/text_files/Gutenberg/GospelOfMatthew.txt
+  Bad File:     /home/russ/sql/sql_loader/bad/GospelOfMatthew.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+Data File:      /home/russ/data/text_files/Gutenberg/GreatExpectations.txt
+  Bad File:     /home/russ/sql/sql_loader/bad/GreatExpectations.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+Data File:      /home/russ/data/text_files/Gutenberg/Hamlet.txt
+  Bad File:     /home/russ/sql/sql_loader/bad/Hamlet.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+Data File:      /home/russ/data/text_files/Gutenberg/JuliusCaesar.txt
+  Bad File:     /home/russ/sql/sql_loader/bad/JuliusCaesar.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+Data File:      /home/russ/data/text_files/Gutenberg/KingLear.txt
+  Bad File:     /home/russ/sql/sql_loader/bad/KingLear.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+Data File:      /home/russ/data/text_files/Gutenberg/Macbeth.txt
+  Bad File:     /home/russ/sql/sql_loader/bad/Macbeth.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+Data File:      /home/russ/data/text_files/Gutenberg/PickwickPapers.txt
+  Bad File:     /home/russ/sql/sql_loader/bad/PickwickPapers.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+Data File:      /home/russ/data/text_files/Gutenberg/RomeoAndJuliet.txt
+  Bad File:     /home/russ/sql/sql_loader/bad/RomeoAndJuliet.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+Data File:      /home/russ/data/text_files/Gutenberg/WarAndPeace.txt
+  Bad File:     /home/russ/sql/sql_loader/bad/WarAndPeace.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 2000
+Bind array:     64 rows, maximum of 256000 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table GOSPEL_OF_JOHN, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+LINE                                                      SEQUENCE (1, 1)
+TEXT                                FIRST   100           CHARACTER            
+
+Table GOSPEL_OF_MATTHEW, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+LINE                                                      SEQUENCE (1, 1)
+TEXT                                    1   100           CHARACTER            
+
+Table GREAT_EXPECTATIONS, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+LINE                                                      SEQUENCE (1, 1)
+TEXT                                    1   100           CHARACTER            
+
+Table HAMLET, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+LINE                                                      SEQUENCE (1, 1)
+TEXT                                    1   100           CHARACTER            
+
+Table JULIUS_CAESAR, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+LINE                                                      SEQUENCE (1, 1)
+TEXT                                    1   100           CHARACTER            
+
+Table KING_LEAR, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+LINE                                                      SEQUENCE (1, 1)
+TEXT                                    1   100           CHARACTER            
+
+Table MACBETH, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+LINE                                                      SEQUENCE (1, 1)
+TEXT                                    1   100           CHARACTER            
+
+Table PICKWICK_PAPERS, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+LINE                                                      SEQUENCE (1, 1)
+TEXT                                    1   100           CHARACTER            
+
+Table ROMEO_AND_JULIET, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+LINE                                                      SEQUENCE (1, 1)
+TEXT                                    1   100           CHARACTER            
+
+Table WAR_AND_PEACE, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+LINE                                                      SEQUENCE (1, 1)
+TEXT                                    1   100           CHARACTER            
+
+
+Table GOSPEL_OF_JOHN:
+  152663 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Table GOSPEL_OF_MATTHEW:
+  152663 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Table GREAT_EXPECTATIONS:
+  152663 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Table HAMLET:
+  152663 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Table JULIUS_CAESAR:
+  152663 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Table KING_LEAR:
+  152663 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Table MACBETH:
+  152663 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Table PICKWICK_PAPERS:
+  152663 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Table ROMEO_AND_JULIET:
+  152663 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Table WAR_AND_PEACE:
+  152663 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                  80000 bytes(64 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:        152663
+Total logical records rejected:         0
+Total logical records discarded:        0
+
+Run began on Sat Oct 30 15:16:52 2010
+Run ended on Sat Oct 30 15:19:37 2010
+
+Elapsed time was:     00:02:44.76
+CPU time was:         00:00:08.05

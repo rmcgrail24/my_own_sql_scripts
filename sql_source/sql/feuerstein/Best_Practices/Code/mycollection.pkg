@@ -1,0 +1,51 @@
+/* Formatted by PL/Formatter v3.1.2.1 on 2001/01/25 21:16 */
+
+CREATE OR REPLACE PACKAGE mycollection
+IS
+   TYPE string_tt IS TABLE OF VARCHAR2 (2000)
+      INDEX BY BINARY_INTEGER;
+
+   PROCEDURE show (list_in IN string_tt);
+
+   FUNCTION eq (list1_in IN string_tt, list2_in IN string_tt)
+      RETURN BOOLEAN;
+END mycollection;
+/
+CREATE OR REPLACE PACKAGE BODY mycollection
+IS
+   PROCEDURE show (list_in IN string_tt)
+   IS
+      indx   PLS_INTEGER := list_in.FIRST;
+   BEGIN
+      LOOP
+         EXIT WHEN indx IS NULL;
+         Pl (list_in (indx));
+         indx := list_in.NEXT (indx);
+      END LOOP;
+   END show;
+
+   FUNCTION eq (list1_in IN string_tt, list2_in IN string_tt)
+      RETURN BOOLEAN
+   IS
+      retval    BOOLEAN     := TRUE;
+      indx      PLS_INTEGER := list1_in.FIRST;
+      l_last1   PLS_INTEGER := list1_in.LAST;
+   BEGIN
+      WHILE retval
+        AND indx <= l_last1
+      LOOP
+         BEGIN
+            retval := list1_in (indx) = list2_in (indx);
+         EXCEPTION
+            WHEN NO_DATA_FOUND
+            THEN
+               retval := FALSE;
+         END;
+
+         indx := list1_in.NEXT (indx);
+      END LOOP;
+
+      RETURN retval;
+   END eq;
+END mycollection;
+/
