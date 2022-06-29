@@ -1,3 +1,0 @@
-This line was added and commited in the master branch, in preparation for text edits.
-The text edits will be simple.  What will happen next?
-Who can say?
