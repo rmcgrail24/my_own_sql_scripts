@@ -1,4 +1,0 @@
-
-ttitle center '***** V$PARAMETER View *****' -
-       right 'Page: ' format 99 sql.pno skip 2
- 
